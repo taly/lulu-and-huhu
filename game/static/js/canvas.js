@@ -16,21 +16,22 @@ function setupBackground(canvas) {
 	canvas.height = canvasHeight;
 
 	// Rectangles
-	drawRectangle(ctx, 1.0, "3", torquise);
-	drawRectangle(ctx, 0.97, "3", yellow);
-	drawRectangle(ctx, 0.94, "3", pink);
+	drawRectangle(ctx, 3, "3", torquise);
+	drawRectangle(ctx, 9, "3", yellow);
+	drawRectangle(ctx, 15, "3", pink);
 
 	// Text
 	drawText(ctx, "Hello huhus!", pink);
 }
 
-function drawRectangle(ctx, perc, lineWidth, color) {
+function drawRectangle(ctx, shift, lineWidth, color) {
 	ctx.beginPath();
 	ctx.lineWidth = lineWidth;
 	ctx.strokeStyle = color;
 
-	var newWidth = (canvasWidth - 6) * perc;
-	var newHeight = (canvasHeight - 6) * perc;
+	var startShift = 2;
+	var newWidth = canvasWidth - startShift * 2 - shift * 2;
+	var newHeight = canvasHeight - startShift * 2 - shift * 2;
 	var newX = 2 + (canvasWidth - newWidth) / 2;
 	var newY = 2 + (canvasHeight - newHeight) / 2;
 	
@@ -42,5 +43,7 @@ function drawText(ctx, text, color) {
 	ctx.font = "30px Arial";
 	ctx.fillStyle = color;
 	ctx.textAlign = "center";
+	var x = canvasWidth / 2;
+	var y = canvasHeight / 2;
 	ctx.fillText(text, canvasWidth / 2, canvasHeight / 2);
 }
