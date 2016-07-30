@@ -1,7 +1,3 @@
-$(document).ready(function() {
-	init();	
-});
-
 var controllersY = canvasHeight - 120;
 var buttonsWidth = 200;
 var buttonsHeight = 40;	
@@ -34,9 +30,9 @@ var pages = [
 ];
 
 function init() {
-
 	// Title
-	canvas.text(canvasWidth / 2, canvasHeight / 2 - 50, "Lulu and Huhu's\nBirthday Treasure Hunt!").attr({font: 'Bold 60px "Helvetica Neue", Arial', fill: pink, stroke: torquiseDark, "stroke-width": 1});
+	canvas.text(canvasWidth / 2, canvasHeight / 2 - 50, "Lulu and Huhu's\nBirthday Treasure Hunt!")
+		.attr({font: 'Bold 60px "Helvetica Neue", Arial', fill: pink, stroke: torquiseDark, "stroke-width": 1});
 
 	// Go to level button
 	showGoToLevelButton();
@@ -44,21 +40,33 @@ function init() {
 	// Intro button
 	var buttonsYDiff = 20;
 	var introButton = canvas.rect(buttonX, controllersY - buttonsHeight - buttonsYDiff - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: torquise, stroke: pink});
-	var introText = canvas.text(canvasWidth / 2, controllersY - buttonsHeight - buttonsYDiff, "Wait, what?").attr({font: 'Bold 26px "Helvetica Neue", Arial', fill: torquiseVeryLight, stroke: "#000"});
-	introButton.click(showIntro);
-	introText.click(showIntro);
+	var introButtonText = canvas.text(canvasWidth / 2, controllersY - buttonsHeight - buttonsYDiff, "Wait, what?").attr({font: 'Bold 26px "Helvetica Neue", Arial', fill: torquiseVeryLight, stroke: "#000"});
+
+	// Click
+	var introButtonClicker = canvas.rect(buttonX, controllersY - buttonsHeight - buttonsYDiff - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: "transparent", "stroke-width": 0});
+	introButtonClicker.click(showNextIntroPage);
+
+	// Hover
+	var hoverIn = function() { introButtonText.attr({fill: pink}); introButton.attr({"stroke-width": 2}); };
+	var hoverOut = function() { introButtonText.attr({fill: torquiseVeryLight}); ; introButton.attr({"stroke-width": 1}); };
+	introButtonClicker.hover(hoverIn, hoverOut);
 }
 
 function showGoToLevelButton() {
+	// Button
 	var goToLevelButton = canvas.rect(buttonX, controllersY - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: yellow, stroke: pink});
-	canvas.text(canvasWidth / 2, controllersY, "Go to Level!").attr({font: 'Bold 26px "Helvetica Neue", Arial', fill: torquiseVeryLight, stroke: "#000"});
-	goToLevelButton.click(function() {
-		// TODO 
-	});
-}
+	var gotToLevelText = canvas.text(canvasWidth / 2, controllersY, "Go to Level!").attr({font: 'Bold 26px "Helvetica Neue", Arial', fill: torquiseVeryLight, stroke: "#000"});
 
-function showIntro() {
-	showNextIntroPage(true);
+	// Clicker
+	var clicker = canvas.rect(buttonX, controllersY - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: "transparent", "stroke-width": 0});
+	clicker.click(function() {
+		promptPassword("What is the password?");
+	});
+
+	// Hover
+	var hoverIn = function() { gotToLevelText.attr({fill: pink}); goToLevelButton.attr({"stroke-width": 2}); };
+	var hoverOut = function() { gotToLevelText.attr({fill: torquiseVeryLight}); ; goToLevelButton.attr({"stroke-width": 1}); };
+	clicker.hover(hoverIn, hoverOut);
 }
 
 function showNextIntroPage() {
@@ -70,25 +78,12 @@ function showPreviousIntroPage() {
 }
 
 function showIntroPage(forward) {
-
-	// These shouldn't happen once we disable the buttons when needed
-	if (forward && currentIntroPage == pages.length) {
-		return;
-	} else if (!forward && currentIntroPage == 0) {
-		return;
-	}
+	currentIntroPage = forward ? currentIntroPage + 1 : currentIntroPage - 1;
 
 	resetCanvas();
 	showGoToLevelButton();
 	drawIntroArrow(true);
 	drawIntroArrow(false);
-
-	currentIntroPage = forward ? currentIntroPage + 1 : currentIntroPage - 1;
-	if (forward && currentIntroPage == pages.length) {
-		// TODO disable forward button
-	} else if (!forward && currentIntroPage == 0) {
-		// TODO disable back button
-	}
 
 	// TODO slide texts with animation
 
@@ -105,7 +100,45 @@ function showIntroPage(forward) {
 		var y = topY + (i + 1)*gap;
 		canvas.text(x, y, texts[i]).attr(attr);
 	}
+
+	// "Give it a try"
+	if (currentIntroPage == pages.length - 1) {
+		var arrowPointX = canvasWidth / 2;
+		var arrowPointY = controllersY - buttonsHeight / 2 - 5;
+		var a = 0.3;
+		var b = 0.5;
+		var arrowHeight = 50;
+		var arrowWidth = 30;
+
+		function getArrowPathStr(curArrowPointY) {
+			return getPathStr([
+					{x: arrowPointX, y: curArrowPointY},
+					{x: arrowPointX + arrowWidth / 2, y: curArrowPointY - a * arrowHeight},
+					{x: arrowPointX + b * arrowWidth / 2, y: curArrowPointY - a * arrowHeight},
+					{x: arrowPointX + b * arrowWidth / 2, y: curArrowPointY - arrowHeight},
+					{x: arrowPointX - b * arrowWidth / 2, y: curArrowPointY - arrowHeight},
+					{x: arrowPointX - b * arrowWidth / 2, y: curArrowPointY - a * arrowHeight},
+					{x: arrowPointX - arrowWidth / 2, y: curArrowPointY - a * arrowHeight}
+			]);
+		}
+
+		// Arrow animation
+		var duration = 500;
+		var arrowShift = 20;
+		var path = canvas.path(getArrowPathStr(arrowPointY - arrowShift)).attr({fill: pink});
+		var anim = Raphael.animation({path: getArrowPathStr(arrowPointY)}, duration, function() {
+			path.animate({path: getArrowPathStr(arrowPointY - arrowShift)}, duration, function() {
+				path.animate(anim);
+			});
+		});
+		path.animate(anim);
+		// path.animate({path: getArrowPathStr(arrowPointY)}, duration, function() {
+		// 	path.animate({path: getArrowPathStr(arrowPointY - arrowShift)}, duration);
+		// });
+	}
 }
+
+
 
 function drawIntroArrow(forward) {
 	// Vars
@@ -113,34 +146,44 @@ function drawIntroArrow(forward) {
 	var arrowShiftY = controllersY;
 	var x = forward ? canvasWidth - arrowShiftX : arrowShiftX;
 	var y = controllersY;
-	var outerRadius = 40;
-	var innerRadius = 35;
-	var triangleWidth = innerRadius;
+	var outerRadius = 30;
+	var innerRadius = 25;
+	var triangleWidth = innerRadius*1.1;
 	var triangleHeight = triangleWidth;
 
-	// Click
-	var clickFunc = forward ? showNextIntroPage : showPreviousIntroPage;
-
+	var disableButton = (forward && currentIntroPage == pages.length - 1) || (!forward && currentIntroPage == 0);
 	// Circles
-	var triX = forward ? x + 5 : x - 5;
-	var c1 = canvas.circle(x, y, outerRadius).attr({"stroke": torquise, "stroke-width": 2});
-	var c2 = canvas.circle(x, y, innerRadius).attr({"stroke": pink, "stroke-width": 2});
-	c1.click(clickFunc);
-	c2.click(clickFunc);
+	var triX = forward ? x + 3 : x - 3;
+	var circleFill = disableButton ? "#eee" : "none";
+	canvas.circle(x, y, outerRadius).attr({"stroke": torquise, "stroke-width": 2, fill: circleFill});
+	canvas.circle(x, y, innerRadius).attr({"stroke": pink, "stroke-width": 2});
 
 	// Triangles
 	var x1 = forward ? triX - triangleWidth / 2 : triX + triangleWidth / 2;
 	var x2 = x1;
 	var x3 = forward ? triX + triangleWidth / 2 : triX - triangleWidth / 2;
+	var pathFill = disableButton ? "#ccc" : torquise;
+	var pathStroke = disableButton ? "#aaa" : "#222";
 	var path = canvas.path(getPathStr([
 		{x: x1, y: y - triangleHeight / 2},
 		{x: x2, y: y + triangleHeight / 2},
 		{x: x3, y: y}
-		])).attr({"fill": torquise});
+		])).attr({fill: pathFill, stroke: pathStroke});
+	if (disableButton) {
+		return;
+	}
+
+	// Hover
+	var clicker = canvas.circle(x, y, outerRadius).attr({fill: "transparent", "stroke-width": 0});
 	var hoverIn = function() {path.animate({"fill": torquiseDark}, 10);};
 	var hoverOut = function() {path.animate({"fill": torquise}, 10);};
-	c1.hover(hoverIn, hoverOut, path, path);
-	c2.hover(hoverIn, null, path, path);
-	path.hover(hoverIn, null, path, path);
-	path.click(clickFunc);
+	clicker.hover(hoverIn, hoverOut);
+
+	// Click
+	var clickFunc = forward ? showNextIntroPage : showPreviousIntroPage;
+	clicker.click(clickFunc);
 }
+
+$(document).ready(function() {
+	init();	
+});

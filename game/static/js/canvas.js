@@ -5,6 +5,7 @@ var torquiseDark = "#079c7c";
 var torquiseVeryLight = "#f5fffd";
 var pink = "#F590CB";
 var yellow = "#FFF04A";
+var yellowLight = "#fff9b8";
 
 var canvas;
 
@@ -20,10 +21,10 @@ function resetCanvas() {
 	var shift1 = 3;
 	var shift2 = 9;
 	var shift3 = 15;
-	
+
 	canvas.rect(shift1, shift1, canvasWidth - shift1*2, canvasHeight - shift1*2).attr({"stroke": torquise, "stroke-width": strokeWidth});
 	canvas.rect(shift2, shift2, canvasWidth - shift2*2, canvasHeight - shift2*2).attr({"stroke": yellow, "stroke-width": strokeWidth});
-	canvas.rect(shift3, shift3, canvasWidth - shift3*2, canvasHeight - shift3*2).attr({"stroke": pink, "stroke-width": strokeWidth});
+	canvas.rect(shift3, shift3, canvasWidth - shift3*2, canvasHeight - shift3*2).attr({"stroke": pink, "stroke-width": strokeWidth, fill: "325-"+yellowLight+"-#fff"});
 }
 
 function getPathStr(points) {
