@@ -1,27 +1,44 @@
-var canvasWidth = 700;
-var canvasHeight = 450;
-var torquise = "#4FF7F5";
+var canvasWidth = 800;
+var canvasHeight = 550;
+var torquise = "#50f7d3";
+var torquiseDark = "#079c7c";
+var torquiseVeryLight = "#f5fffd";
 var pink = "#F590CB";
 var yellow = "#FFF04A";
 
+var canvas;
 
 $(document).ready(function() {
-	var canvas = document.getElementById("gameCanvas");
-	setupBackground(canvas);
+	canvas = Raphael("gameCanvas", canvasWidth, canvasHeight);
+	resetCanvas();
 });
 
-function setupBackground(canvas) {
-	var ctx = canvas.getContext("2d");
-	canvas.width = canvasWidth;
-	canvas.height = canvasHeight;
+function resetCanvas() {
+	canvas.clear();
 
-	// Rectangles
-	drawRectangle(ctx, 3, "3", torquise);
-	drawRectangle(ctx, 9, "3", yellow);
-	drawRectangle(ctx, 15, "3", pink);
+	var strokeWidth = 3;
+	var shift1 = 3;
+	var shift2 = 9;
+	var shift3 = 15;
+	
+	canvas.rect(shift1, shift1, canvasWidth - shift1*2, canvasHeight - shift1*2).attr({"stroke": torquise, "stroke-width": strokeWidth});
+	canvas.rect(shift2, shift2, canvasWidth - shift2*2, canvasHeight - shift2*2).attr({"stroke": yellow, "stroke-width": strokeWidth});
+	canvas.rect(shift3, shift3, canvasWidth - shift3*2, canvasHeight - shift3*2).attr({"stroke": pink, "stroke-width": strokeWidth});
+}
 
-	// Text
-	drawText(ctx, "Hello huhus!", pink);
+function getPathStr(points) {
+	var ret = "";
+	for (var i = 0; i < points.length; i++) {
+		if (i == 0) {
+			ret += "M";
+		} else {
+			ret += "L";
+		}
+		var point = points[i];
+		ret += point.x + "," + point.y;
+	}
+	ret += "Z";
+	return ret;
 }
 
 function drawRectangle(ctx, shift, lineWidth, color) {
@@ -39,11 +56,16 @@ function drawRectangle(ctx, shift, lineWidth, color) {
 	ctx.stroke();
 }
 
-function drawText(ctx, text, color) {
-	ctx.font = "30px Arial";
+function drawCircle(ctx, x, y, radius, color) {
+	ctx.beginPath();
+	ctx.strokeStyle = color;
+	ctx.arc(x, y, radius, 0, 2*Math.PI);
+	ctx.stroke();
+}
+
+function drawText(ctx, x, y, text, color, font, align) {
+	ctx.font = font;
 	ctx.fillStyle = color;
-	ctx.textAlign = "center";
-	var x = canvasWidth / 2;
-	var y = canvasHeight / 2;
-	ctx.fillText(text, canvasWidth / 2, canvasHeight / 2);
+	ctx.textAlign = align;
+	ctx.fillText(text, x, y);
 }

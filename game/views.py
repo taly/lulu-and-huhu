@@ -5,7 +5,7 @@ from django.template import loader
 from level_map import levels
 
 def index(request):
-    return HttpResponse("Hiush.")
+    return render(request, 'game/base.html', {})
 
 def level(request, url_key):
 	for level in levels:
