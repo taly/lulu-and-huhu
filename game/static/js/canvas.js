@@ -4,8 +4,14 @@ var torquise = "#50f7d3";
 var torquiseDark = "#079c7c";
 var torquiseVeryLight = "#f5fffd";
 var pink = "#F590CB";
+var pinkLight = "#fac7e5";
+var pinkDark = "#ea1f96";
 var yellow = "#FFF04A";
 var yellowLight = "#fff9b8";
+
+var fontGeorgia = 'Georgia, serif';
+var fontTahoma = 'Tahoma, Geneva, sans-serif';
+var fontLucida = '"Lucida Sans Unicode", "Lucida Grande", sans-serif';
 
 var canvas;
 

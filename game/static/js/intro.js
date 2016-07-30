@@ -30,9 +30,20 @@ var pages = [
 ];
 
 function init() {
+	// Custom attribute for title
+	canvas.customAttributes.titleGradientAngle = function(angle) {
+		return {fill: "" + angle + "-" + pinkLight + "-" + pinkDark};
+	};
+
 	// Title
-	canvas.text(canvasWidth / 2, canvasHeight / 2 - 50, "Lulu and Huhu's\nBirthday Treasure Hunt!")
-		.attr({font: 'Bold 60px "Helvetica Neue", Arial', fill: pink, stroke: torquiseDark, "stroke-width": 1});
+	var titleX = canvasWidth / 2;
+	var titleY = canvasHeight / 2 - 50;
+	var animShift = 10;
+	var title = canvas.text(titleX, titleY, "Lulu and Huhu's\nBirthday Treasure Hunt!")
+		.attr({font: 'Bold 58px ' + fontGeorgia, titleGradientAngle: 0, stroke: torquiseDark, "stroke-width": 1});
+	
+	var anim = Raphael.animation({titleGradientAngle: 360}, 2000).repeat("Infinity");
+	// title.animate(anim);
 
 	// Go to level button
 	showGoToLevelButton();
@@ -40,7 +51,7 @@ function init() {
 	// Intro button
 	var buttonsYDiff = 20;
 	var introButton = canvas.rect(buttonX, controllersY - buttonsHeight - buttonsYDiff - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: torquise, stroke: pink});
-	var introButtonText = canvas.text(canvasWidth / 2, controllersY - buttonsHeight - buttonsYDiff, "Wait, what?").attr({font: 'Bold 26px "Helvetica Neue", Arial', fill: torquiseVeryLight, stroke: "#000"});
+	var introButtonText = canvas.text(canvasWidth / 2, controllersY - buttonsHeight - buttonsYDiff, "Wait, what?").attr({font: 'Bold 26px ' + fontTahoma, fill: torquiseVeryLight, stroke: "#000"});
 
 	// Click
 	var introButtonClicker = canvas.rect(buttonX, controllersY - buttonsHeight - buttonsYDiff - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: "transparent", "stroke-width": 0});
@@ -55,7 +66,7 @@ function init() {
 function showGoToLevelButton() {
 	// Button
 	var goToLevelButton = canvas.rect(buttonX, controllersY - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: yellow, stroke: pink});
-	var gotToLevelText = canvas.text(canvasWidth / 2, controllersY, "Go to Level!").attr({font: 'Bold 26px "Helvetica Neue", Arial', fill: torquiseVeryLight, stroke: "#000"});
+	var gotToLevelText = canvas.text(canvasWidth / 2, controllersY, "Go to Level!").attr({font: 'Bold 26px ' + fontTahoma, fill: torquiseVeryLight, stroke: "#000"});
 
 	// Clicker
 	var clicker = canvas.rect(buttonX, controllersY - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: "transparent", "stroke-width": 0});
@@ -89,16 +100,19 @@ function showIntroPage(forward) {
 
 	// Vars	
 	texts = pages[currentIntroPage];
-	var x = canvasWidth / 2;
+	var x = forward ? 1.5 * canvasWidth : -1.5 * canvasWidth;
+	// var x = canvasWidth / 2;
 	var topY = 50;
 	var bottomY = controllersY - buttonsHeight / 2 - 20;
 	var gap = (bottomY - topY) / (texts.length + 1);
-	var attr = {font: '26px "Helvetica Neue", Arial', fill: torquiseDark};
+	var attr = {font: '26px ' + fontGeorgia, fill: torquiseDark};
 
 	// Texts
 	for (var i = 0; i < texts.length; i++) {
 		var y = topY + (i + 1)*gap;
-		canvas.text(x, y, texts[i]).attr(attr);
+		var text = canvas.text(x, y, texts[i]).attr(attr);
+		var anim = Raphael.animation({x: canvasWidth / 2}, 800, "elastic").delay(200 * i);
+		text.animate(anim);
 	}
 
 	// "Give it a try"
