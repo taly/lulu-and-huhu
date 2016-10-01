@@ -11,6 +11,10 @@ var spaces;
 
 function init() {
 	resetGame();
+
+	// Let's just cheat so that this is ready in the cache for later ;)
+	var img = new Image();
+	img.src = "/static/img/zoe2.png";
 }
 
 function drawSkeleton() {
@@ -38,17 +42,23 @@ function addClicker(i, x, y) {
 	var clicker = canvas.rect(x, y, edgeLength / 3, edgeLength / 3).attr({fill: "transparent", "stroke-width": 0});
 	clicker.id = "c" + i;
 	clicker.click(function() {
-		clicker.remove();
 		onClick(i, userPlaying);
 	});
+
+	var hoverIn = function() { clicker.attr({"stroke-width": 3, "stroke": "#ccc", "stroke-opacity": 0.5}); };
+	var hoverOut = function() { clicker.attr({"stroke-width": 0}); };
+	clicker.hover(hoverIn, hoverOut);
 }
 
 function onClick(index, player) {
+	// Remove clicker
+	canvas.getById("c" + index).remove();
+
 	// Prelims
 	var a = edgeLength / 6;
 	var centerX = x - edgeLength / 2 + a * (1 + 2 * (index % 3));
 	var centerY = y - edgeLength / 2 + a * (1 + 2 * (Math.floor(index / 3)));
-	var squareLength = a*2*0.8;
+	var squareLength = a*2*0.7;
 
 	// Draw user move
 	if (player == O) {
@@ -60,19 +70,21 @@ function onClick(index, player) {
 	}
 
 	// Check if somebody won
-	spaces[index] = player;
-	var computerPlaying = (userPlaying == O) ? X : O;
-	var winner = whoWins();
-	console.log("WINNER: " + winner);
-	if (winner == userPlaying) {
-		console.log("onWin");
-		onWin();
-	} else if (winner == computerPlaying || isBoardFull()) {
-		console.log("onLose");
-		onLose();
-	} else if (player == userPlaying) {
-		randomizeMove();
-	}
+	setTimeout(function() {
+		spaces[index] = player;
+		var computerPlaying = (userPlaying == O) ? X : O;
+		var winner = whoWins();
+		console.log("WINNER: " + winner);
+		if (winner == userPlaying) {
+			console.log("onWin");
+			onWin();
+		} else if (winner == computerPlaying || isBoardFull()) {
+			console.log("onLose");
+			onLose();
+		} else if (player == userPlaying) {
+			randomizeMove();
+		}
+	}, 1000);
 }
 
 function isBoardFull() {
@@ -108,20 +120,48 @@ function resetGame() {
 
 function randomizeMove() {
 	console.log("Randomizing move");
-	// TODO actually try to win
 
-	var availableSpaces = [];
-	for (var i = 0; i < spaces.length; i++) {
-		if (spaces[i] == NONE) {
-			availableSpaces.push(i);
+	// First see if we have a winning move
+	var computerPlaying = (userPlaying == O) ? X : O;
+	var winningSeqs = [
+		[0, 1, 2],
+		[3, 4, 5],
+		[6, 7, 8],
+		[0, 3, 6],
+		[1, 4, 7],
+		[2, 5, 8],
+		[0, 4, 8],
+		[2, 4, 6]
+	];
+	var chosenSpace = -1;
+	for (var i = 0; i < winningSeqs.length; i++) {
+		var seq = winningSeqs[i];
+		if (spaces[seq[0]] == NONE && spaces[seq[1]] == computerPlaying && spaces[seq[2]] == computerPlaying) {
+			chosenSpace = seq[0];
+			break;
+		} else if (spaces[seq[0]] == computerPlaying && spaces[seq[1]] == NONE && spaces[seq[2]] == computerPlaying) {
+			chosenSpace = seq[1];
+			break;
+		} else if (spaces[seq[0]] == computerPlaying && spaces[seq[1]] == computerPlaying && spaces[seq[2]] == NONE) {
+			chosenSpace = seq[2];
+			break;
 		}
 	}
-	var randomIndex = Math.floor(Math.random() * availableSpaces.length);
-	console.log("Random available spaces index: " + randomIndex);
-	var randomSpace = availableSpaces[randomIndex];
-	console.log("Random spaces index: " + randomSpace);
-	var computerPlaying = (userPlaying == O) ? X : O;
-	onClick(randomSpace, computerPlaying);
+
+	if (chosenSpace == -1) {
+		// Just randomize a move
+		var availableSpaces = [];
+		for (var i = 0; i < spaces.length; i++) {
+			if (spaces[i] == NONE) {
+				availableSpaces.push(i);
+			}
+		}
+		var randomIndex = Math.floor(Math.random() * availableSpaces.length);
+		chosenSpace = availableSpaces[randomIndex];	
+	}
+	
+	
+	onClick(chosenSpace, computerPlaying);
 }
 
 function whoWins() {
