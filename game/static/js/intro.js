@@ -63,7 +63,7 @@ function init() {
 	introButtonClicker.hover(hoverIn, hoverOut);
 }
 
-function showGoToLevelButton() {
+function showGoToLevelButton(buttonText) {
 	// Button
 	var goToLevelButton = canvas.rect(buttonX, controllersY - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: yellow, stroke: pink});
 	var gotToLevelText = canvas.text(canvasWidth / 2, controllersY, "Go to Level!").attr({font: 'Bold 26px ' + fontTahoma, fill: torquiseVeryLight, stroke: "#000"});
@@ -71,7 +71,7 @@ function showGoToLevelButton() {
 	// Clicker
 	var clicker = canvas.rect(buttonX, controllersY - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: "transparent", "stroke-width": 0});
 	clicker.click(function() {
-		promptPassword("What is the password?");
+		promptPassword();
 	});
 
 	// Hover

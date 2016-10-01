@@ -13,6 +13,11 @@ var fontGeorgia = 'Georgia, serif';
 var fontTahoma = 'Tahoma, Geneva, sans-serif';
 var fontLucida = '"Lucida Sans Unicode", "Lucida Grande", sans-serif';
 
+var buttonsWidth = 200;
+var buttonsHeight = 40;	
+var titleX = canvasWidth / 2;
+var titleY = 100;
+
 var canvas;
 
 $(document).ready(function() {
@@ -70,9 +75,49 @@ function drawCircle(ctx, x, y, radius, color) {
 	ctx.stroke();
 }
 
-function drawText(ctx, x, y, text, color, font, align) {
-	ctx.font = font;
-	ctx.fillStyle = color;
-	ctx.textAlign = align;
-	ctx.fillText(text, x, y);
+// function drawText(ctx, x, y, text, color, font, align) {
+// 	ctx.font = font;
+// 	ctx.fillStyle = color;
+// 	ctx.textAlign = align;
+// 	ctx.fillText(text, x, y);
+// }
+
+function showLevelTitle(level) {
+	var attr = {font: '36px ' + fontGeorgia, fill: torquiseDark};
+	canvas.text(titleX, titleY, "Level " + level).attr(attr);
+}
+
+function showStandardButton(x, y, buttonText, onClick) {
+	// Button
+	var goToLevelButton = canvas.rect(x - buttonsWidth / 2, y - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: yellow, stroke: pink});
+	var gotToLevelText = canvas.text(canvasWidth / 2, y, buttonText).attr({font: 'Bold 26px ' + fontTahoma, fill: torquiseVeryLight, stroke: "#000"});
+
+	// Clicker
+	var clicker = canvas.rect(x - buttonsWidth / 2, y - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: "transparent", "stroke-width": 0});
+	clicker.click(onClick);
+
+	// Hover
+	var hoverIn = function() { gotToLevelText.attr({fill: pink}); goToLevelButton.attr({"stroke-width": 2}); };
+	var hoverOut = function() { gotToLevelText.attr({fill: torquiseVeryLight}); ; goToLevelButton.attr({"stroke-width": 1}); };
+	clicker.hover(hoverIn, hoverOut);
+}
+
+function showAnswerButton(x, y, onSuccess) {
+	showStandardButton(x, y, "Answer", function() {
+		promptPassword(onSuccess);
+	});
+	// // Button
+	// var goToLevelButton = canvas.rect(x - buttonsWidth / 2, y - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: yellow, stroke: pink});
+	// var gotToLevelText = canvas.text(canvasWidth / 2, y, "Answer").attr({font: 'Bold 26px ' + fontTahoma, fill: torquiseVeryLight, stroke: "#000"});
+
+	// // Clicker
+	// var clicker = canvas.rect(x - buttonsWidth / 2, y - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: "transparent", "stroke-width": 0});
+	// clicker.click(function() {
+	// 	promptPassword(onSuccess);
+	// });
+
+	// // Hover
+	// var hoverIn = function() { gotToLevelText.attr({fill: pink}); goToLevelButton.attr({"stroke-width": 2}); };
+	// var hoverOut = function() { gotToLevelText.attr({fill: torquiseVeryLight}); ; goToLevelButton.attr({"stroke-width": 1}); };
+	// clicker.hover(hoverIn, hoverOut);
 }

@@ -1,19 +1,21 @@
 <!DOCTYPE >
-    <html>
-        <head>
-            <!-- css and javascript template should be here -->
-            <title>
-                {% block title %}
-                {% endblock %}
-            </title>
-            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-            <script type="text/javascript" src="/static/js/raphael.min.js"></script>
-            <script type="text/javascript" src="/static/js/canvas.js"></script>
-            <script type="text/javascript" src="/static/js/proxy.js"></script>
-            <script type="text/javascript" src="/static/js/intro.js"></script>
-        </head>
-        <body>
-            <div id="gameCanvas"">
-            </canvas>
-        </body>
-    </html>
+<html>
+    <head>
+        <!-- css and javascript template should be here -->
+        <title>
+            {% block title %}
+            {% endblock %}
+        </title>
+        {% block js %}
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/js/raphael.min.js"></script>
+        <script type="text/javascript" src="/static/js/canvas.js"></script>
+        <script type="text/javascript" src="/static/js/proxy.js"></script>
+        <!-- <script type="text/javascript" src="/static/js/intro.js"></script> -->
+        {% endblock %}
+    </head>
+    <body>
+        <div id="gameCanvas"">
+        </canvas>
+    </body>
+</html>

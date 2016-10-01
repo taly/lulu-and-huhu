@@ -1,4 +1,4 @@
-function promptPassword() {
+function promptPassword(onSuccess) {
 	var password = prompt("What is the level password?", "");
 	$.ajax({
 	  type: "POST",
@@ -8,7 +8,11 @@ function promptPassword() {
 	  success: function (data) {
 	  	resp = JSON.parse(data)
 	  	var url = resp.redirect;
-	  	window.location = url;
+	  	if (onSuccess != null) {
+			onSuccess(url);	  		
+	  	} else {
+	  		window.location = url;
+	  	}
 	  },
 	  error: function (data) {
 	  	if (data.status == 403) {

@@ -7,14 +7,17 @@ import json
 from level_map import levels
 
 def index(request):
-    return render(request, 'game/base.html', {})
+    return render(request, 'game/intro.html', {})
 
 def level(request, url_key):
 	for i in range(len(levels)):
 		level = levels[i]
 		if url_key == level.url_key:
-			# return render(request, 'game/base.html', {})
-			return HttpResponse("Level: %d, URL key: %s, passwords: %s" % (i, url_key, level.passwords))
+			if i == 0:
+				return render(request, 'game/level1.html')
+			else:
+				# return render(request, 'game/base.html', {})
+				return HttpResponse("Level: %d, URL key: %s, passwords: %s" % (i, url_key, level.passwords))
 	return HttpResponse("Level not found for URL key: %s" % url_key)
 
 def submit_password(request):
