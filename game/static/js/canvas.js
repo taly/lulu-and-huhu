@@ -53,34 +53,14 @@ function getPathStr(points) {
 	return ret;
 }
 
-function drawRectangle(ctx, shift, lineWidth, color) {
-	ctx.beginPath();
-	ctx.lineWidth = lineWidth;
-	ctx.strokeStyle = color;
-
-	var startShift = 2;
-	var newWidth = canvasWidth - startShift * 2 - shift * 2;
-	var newHeight = canvasHeight - startShift * 2 - shift * 2;
-	var newX = 2 + (canvasWidth - newWidth) / 2;
-	var newY = 2 + (canvasHeight - newHeight) / 2;
-	
-	ctx.rect(newX, newY, newWidth, newHeight);
-	ctx.stroke();
+function drawLine(x1, y1, x2, y2, attr) {
+	var s = "M" + x1 + " " + y1 + "L" + x2 + " " + y2;
+	if (attr == null) {
+		canvas.path(s);
+	} else {
+		canvas.path(s).attr(attr);
+	}
 }
-
-function drawCircle(ctx, x, y, radius, color) {
-	ctx.beginPath();
-	ctx.strokeStyle = color;
-	ctx.arc(x, y, radius, 0, 2*Math.PI);
-	ctx.stroke();
-}
-
-// function drawText(ctx, x, y, text, color, font, align) {
-// 	ctx.font = font;
-// 	ctx.fillStyle = color;
-// 	ctx.textAlign = align;
-// 	ctx.fillText(text, x, y);
-// }
 
 function showLevelTitle(level) {
 	var attr = {font: '36px ' + fontGeorgia, fill: torquiseDark};
@@ -102,22 +82,8 @@ function showStandardButton(x, y, buttonText, onClick) {
 	clicker.hover(hoverIn, hoverOut);
 }
 
-function showAnswerButton(x, y, onSuccess) {
-	showStandardButton(x, y, "Answer", function() {
+function showAnswerButton(x, y, buttonText, onSuccess) {
+	showStandardButton(x, y, buttonText, function() {
 		promptPassword(onSuccess);
 	});
-	// // Button
-	// var goToLevelButton = canvas.rect(x - buttonsWidth / 2, y - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: yellow, stroke: pink});
-	// var gotToLevelText = canvas.text(canvasWidth / 2, y, "Answer").attr({font: 'Bold 26px ' + fontTahoma, fill: torquiseVeryLight, stroke: "#000"});
-
-	// // Clicker
-	// var clicker = canvas.rect(x - buttonsWidth / 2, y - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: "transparent", "stroke-width": 0});
-	// clicker.click(function() {
-	// 	promptPassword(onSuccess);
-	// });
-
-	// // Hover
-	// var hoverIn = function() { gotToLevelText.attr({fill: pink}); goToLevelButton.attr({"stroke-width": 2}); };
-	// var hoverOut = function() { gotToLevelText.attr({fill: torquiseVeryLight}); ; goToLevelButton.attr({"stroke-width": 1}); };
-	// clicker.hover(hoverIn, hoverOut);
 }

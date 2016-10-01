@@ -9,4 +9,5 @@ class Level(object):
 levels = [
 	Level("69152a4bfd4a", ["happybirthday"]),
 	Level("8fbee8ca1649", ["phoenix"]),
+	Level("a0279df3b51e", ["beepbeep"])
 ]

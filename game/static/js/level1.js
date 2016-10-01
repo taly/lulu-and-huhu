@@ -1,5 +1,3 @@
-var nextLevelUrl;
-
 function init() {
 	showLevelTitle(1);
 	var attr = {font: '20px ' + fontGeorgia, fill: pinkDark};
@@ -8,7 +6,7 @@ function init() {
 	canvas.text(titleX, middleY - shift, "Let's start with an easy one.").attr(attr);
 	canvas.text(titleX, middleY + shift, "Harry Potter's wand contains a feather belonging to which type of bird?").attr(attr);
 
-	showAnswerButton(canvasWidth / 2, canvasHeight - 100, onSuccess);
+	showAnswerButton(canvasWidth / 2, canvasHeight - 100, "Answer", onSuccess);
 }
 
 function onSuccess(redirectUrl) {
