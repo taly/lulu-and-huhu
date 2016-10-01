@@ -84,7 +84,7 @@ function onClick(index, player) {
 		} else if (player == userPlaying) {
 			randomizeMove();
 		}
-	}, 1000);
+	}, 800);
 }
 
 function isBoardFull() {
@@ -125,19 +125,24 @@ function randomizeMove() {
 }
 
 function getRandomMove() {
-	// First see if we have a winning move
-	var computerPlaying = (userPlaying == O) ? X : O;
-	var winningMove = findWinningMove(computerPlaying);
-	if (winningMove != -1) {
-		return winningMove;
-	}
+	// TTT with 2 perfect players can get a bit boring without this...
+	var makeError = Math.random() < 0.3;
 
-	// Then try to block player from winning
-	var losingMove = findWinningMove(userPlaying);
-	if (losingMove != -1) {
-		return losingMove;
-	}
+	if (!makeError) {
+		// First see if we have a winning move
+		var computerPlaying = (userPlaying == O) ? X : O;
+		var winningMove = findWinningMove(computerPlaying);
+		if (winningMove != -1) {
+			return winningMove;
+		}
 
+		// Then try to block player from winning
+		var losingMove = findWinningMove(userPlaying);
+		if (losingMove != -1) {
+			return losingMove;
+		}	
+	}
+	
 	// Then just randomize move
 	var availableSpaces = [];
 	for (var i = 0; i < spaces.length; i++) {
