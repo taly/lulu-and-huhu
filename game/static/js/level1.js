@@ -17,8 +17,9 @@ function onSuccess(redirectUrl) {
 	// Image
 	var zoeImg = new Image();
 	zoeImg.src = "/static/img/zoe1.jpg";
-	var imgWidth = zoeImg.width;
-	var imgHeight = zoeImg.height;
+	// Using hardcoded values since we won't get these until the image is loaded, which might be too late
+	var imgWidth = 500;
+	var imgHeight = 375;
 	var zoeImgX = canvasWidth / 2 - imgWidth / 2;
 	var zoeImgY = canvasHeight / 2 - imgHeight / 2;
 	canvas.image(zoeImg.src, zoeImgX, zoeImgY, imgWidth, imgHeight);
@@ -30,8 +31,9 @@ function onSuccess(redirectUrl) {
 	// Speech bubble
 	var speechImg = new Image();
 	speechImg.src = "/static/img/speech1.png";
-	var speechWidth = speechImg.width;
-	var speechHeight = speechImg.height;
+	// Using hardcoded values since we won't get these until the image is loaded, which might be too late
+	var speechWidth = 192;
+	var speechHeight = 192;
 	var speechX = zoeImgX + 100;
 	var speechY = zoeImgY + 10;
 	canvas.image(speechImg.src, speechX, speechY, speechWidth, speechHeight);
