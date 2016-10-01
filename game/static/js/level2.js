@@ -119,10 +119,37 @@ function resetGame() {
 }
 
 function randomizeMove() {
-	console.log("Randomizing move");
+	var chosenMove = getRandomMove();
+	var computerPlaying = (userPlaying == O) ? X : O;
+	onClick(chosenMove, computerPlaying);
+}
 
+function getRandomMove() {
 	// First see if we have a winning move
 	var computerPlaying = (userPlaying == O) ? X : O;
+	var winningMove = findWinningMove(computerPlaying);
+	if (winningMove != -1) {
+		return winningMove;
+	}
+
+	// Then try to block player from winning
+	var losingMove = findWinningMove(userPlaying);
+	if (losingMove != -1) {
+		return losingMove;
+	}
+
+	// Then just randomize move
+	var availableSpaces = [];
+	for (var i = 0; i < spaces.length; i++) {
+		if (spaces[i] == NONE) {
+			availableSpaces.push(i);
+		}
+	}
+	var randomIndex = Math.floor(Math.random() * availableSpaces.length);
+	return availableSpaces[randomIndex];	
+}
+
+function findWinningMove(player) {
 	var winningSeqs = [
 		[0, 1, 2],
 		[3, 4, 5],
@@ -133,35 +160,17 @@ function randomizeMove() {
 		[0, 4, 8],
 		[2, 4, 6]
 	];
-	var chosenSpace = -1;
 	for (var i = 0; i < winningSeqs.length; i++) {
 		var seq = winningSeqs[i];
-		if (spaces[seq[0]] == NONE && spaces[seq[1]] == computerPlaying && spaces[seq[2]] == computerPlaying) {
-			chosenSpace = seq[0];
-			break;
-		} else if (spaces[seq[0]] == computerPlaying && spaces[seq[1]] == NONE && spaces[seq[2]] == computerPlaying) {
-			chosenSpace = seq[1];
-			break;
-		} else if (spaces[seq[0]] == computerPlaying && spaces[seq[1]] == computerPlaying && spaces[seq[2]] == NONE) {
-			chosenSpace = seq[2];
-			break;
+		if (spaces[seq[0]] == NONE && spaces[seq[1]] == player && spaces[seq[2]] == player) {
+			return seq[0];
+		} else if (spaces[seq[0]] == player && spaces[seq[1]] == NONE && spaces[seq[2]] == player) {
+			return seq[1];
+		} else if (spaces[seq[0]] == player && spaces[seq[1]] == player && spaces[seq[2]] == NONE) {
+			return seq[2];
 		}
 	}
-
-	if (chosenSpace == -1) {
-		// Just randomize a move
-		var availableSpaces = [];
-		for (var i = 0; i < spaces.length; i++) {
-			if (spaces[i] == NONE) {
-				availableSpaces.push(i);
-			}
-		}
-		var randomIndex = Math.floor(Math.random() * availableSpaces.length);
-		chosenSpace = availableSpaces[randomIndex];	
-	}
-	
-	
-	onClick(chosenSpace, computerPlaying);
+	return -1;
 }
 
 function whoWins() {
@@ -207,8 +216,6 @@ function onWin() {
 	var img = canvas.image("/static/img/zoe2.png", titleX - imgWidth / 2, passwordY - imgHeight / 2, imgWidth, imgHeight);
 	var anim = Raphael.animation({x: canvasWidth}, 800, "backIn");
 	setTimeout(function() {img.animate(anim);}, 1500);
-
-	// TODO animate Zoe
 
 	// Continue button
 	showAnswerButton(canvasWidth / 2, canvasHeight - 50, "Next level", function() {
