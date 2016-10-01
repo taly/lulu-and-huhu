@@ -1,6 +1,21 @@
-var PASSWORD_POST_URL = "/"
-
 function promptPassword() {
 	var password = prompt("What is the level password?", "");
-
+	$.ajax({
+	  type: "POST",
+	  url: "/password/",
+	  data: JSON.stringify({"password": password}),
+	  contentType: 'application/json; charset=utf-8',
+	  success: function (data) {
+	  	resp = JSON.parse(data)
+	  	var url = resp.redirect;
+	  	window.location = url;
+	  },
+	  error: function (data) {
+	  	if (data.status == 403) {
+	  		alert("Wrong password :(")
+	  	} else {
+		  	alert("Unexpected failure :(");
+	  	}
+	  }
+	});
 }
