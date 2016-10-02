@@ -13,8 +13,8 @@ function init() {
 	resetGame();
 
 	// Let's just cheat so that this is ready in the cache for later ;)
-	var img = new Image();
-	img.src = "/static/img/zoe2.png";
+	(new Image()).src = "/static/img/zoe2.png";
+	(new Image()).src = "/static/img/ribbon1.png";
 }
 
 function drawSkeleton() {
@@ -219,8 +219,47 @@ function onWin() {
 	var imgWidth = 232;
 	var imgHeight = 274;
 	var img = canvas.image("/static/img/zoe2.png", titleX - imgWidth / 2, passwordY - imgHeight / 2, imgWidth, imgHeight);
-	var anim = Raphael.animation({x: canvasWidth}, 800, "backIn");
-	setTimeout(function() {img.animate(anim);}, 1500);
+
+	// Ribobon
+	var ribbonWidth = 245;
+	var ribbonHeight = 94;
+	var ribbonX = titleX - imgWidth / 2 - ribbonWidth - 20;
+	var ribbonY = passwordY - ribbonHeight / 2;
+	var ribbonImg = canvas.image("/static/img/ribbon1.png", ribbonX, ribbonY, ribbonWidth, ribbonHeight);
+
+	// Ribbon string
+	var stringBackShift = 30;
+	var stringX = ribbonX + ribbonWidth - stringBackShift;
+	var stringY = ribbonY + ribbonHeight / 2 + 11;
+	var stringLength = 62;
+	var ribbonString = drawLine(stringX, stringY, stringX + stringLength, stringY, {"stroke-width": 2});
+
+	// Ribbon text
+	var revealAttr = {font: '30px ' + fontGeorgia, fill: red};
+	var ribbonText = canvas.text(ribbonX + ribbonWidth / 2, ribbonY + ribbonHeight / 2, "Zoe is 2").attr(revealAttr);
+
+	// Animation
+	var animDuration = 1000;
+	// var anim = Raphael.animation({x: canvasWidth + 50}, animDuration, "backIn");
+	setTimeout(function() {
+		var canvasOverflowX = 50;
+
+		var ribbonPostAnimX = canvasWidth + canvasOverflowX;
+		var ribbonAnim = Raphael.animation({x: ribbonPostAnimX}, animDuration, "backIn");
+		ribbonImg.animate(ribbonAnim);
+
+		var ribbonTextAnim = Raphael.animation({x: ribbonPostAnimX + ribbonWidth / 2}, animDuration, "backIn");
+		ribbonText.animate(ribbonTextAnim);
+
+		var stringPostAnimX = canvasWidth + canvasOverflowX + ribbonWidth - stringBackShift;
+		var stringAnim = Raphael.animation({path: getPathString(stringPostAnimX, stringY, stringPostAnimX + stringLength, stringY)}, animDuration, "backIn");
+		ribbonString.animate(stringAnim);
+
+		var imgPostAnimX = 1.5 * canvasWidth - imgWidth / 2 + canvasOverflowX;
+		var imgAnim = Raphael.animation({x: imgPostAnimX}, animDuration, "backIn");
+		img.animate(imgAnim);
+
+	}, 1500);
 
 	// Continue button
 	showAnswerButton(canvasWidth / 2, canvasHeight - 50, "Next level", function() {

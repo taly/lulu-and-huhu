@@ -8,6 +8,7 @@ var pinkLight = "#fac7e5";
 var pinkDark = "#ea1f96";
 var yellow = "#FFF04A";
 var yellowLight = "#fff9b8";
+var red = "#d86464";
 
 var fontGeorgia = 'Georgia, serif';
 var fontTahoma = 'Tahoma, Geneva, sans-serif';
@@ -53,12 +54,17 @@ function getPathStr(points) {
 	return ret;
 }
 
-function drawLine(x1, y1, x2, y2, attr) {
+function getPathString(x1, y1, x2, y2) {
 	var s = "M" + x1 + " " + y1 + "L" + x2 + " " + y2;
+	return s;
+}
+
+function drawLine(x1, y1, x2, y2, attr) {
+	var s = getPathString(x1, y1, x2, y2);
 	if (attr == null) {
-		canvas.path(s);
+		return canvas.path(s);
 	} else {
-		canvas.path(s).attr(attr);
+		return canvas.path(s).attr(attr);
 	}
 }
 
