@@ -1,6 +1,4 @@
 var controllersY = canvasHeight - 120;
-var buttonsWidth = 200;
-var buttonsHeight = 40;	
 var buttonX = canvasWidth / 2 - buttonsWidth / 2;
 
 var currentIntroPage = -1;
@@ -13,15 +11,16 @@ var pages = [
 	],
 	[
 		"Each level is a challenge.",
-		"When you solve the challenge, good things will happen!",
+		"When you solve the challenge, good things will happen!"
 	],
 	[
-		"The type and difficulty of the challenges\nwill vary, so stay vigilant!",
+		"The type and difficulty of the challenges\nwill vary, so stay vigilant.",
+		"You might need to Google things sometimes - that's OK!"
+	],
+	[
 		"When a level ends, you'll obtain\nthe password to unlock the next level.",
-	],
-	[
-		"Always remember the last password you've discovered!",
-		"The \"Go to Level\" button will ask you for it\nand take you to its corresponding level."
+		"You can always leave for a while and come back later.",
+		"Just always remember the last password\nyou've discovered!",
 	],
 	[
 		"Good luck!",

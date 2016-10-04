@@ -36,6 +36,9 @@ function drawSkeleton() {
 	addClicker(6, x - a*3, y + a);
 	addClicker(7, x - a, y + a);
 	addClicker(8, x + a, y + a);
+
+	// FOR DEBUG
+	onWin();
 }
 
 function addClicker(i, x, y) {
@@ -262,7 +265,7 @@ function onWin() {
 	}, 1500);
 
 	// Continue button
-	showAnswerButton(canvasWidth / 2, canvasHeight - 50, "Next level", function() {
+	showAnswerButton(canvasWidth / 2, canvasHeight - 50, "Next level", function(redirectUrl) {
 		window.location = redirectUrl;
 	});
 }
