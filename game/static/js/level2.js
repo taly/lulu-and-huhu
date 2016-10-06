@@ -36,9 +36,6 @@ function drawSkeleton() {
 	addClicker(6, x - a*3, y + a);
 	addClicker(7, x - a, y + a);
 	addClicker(8, x + a, y + a);
-
-	// FOR DEBUG
-	onWin();
 }
 
 function addClicker(i, x, y) {
