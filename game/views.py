@@ -9,15 +9,12 @@ from level_map import levels
 def index(request):
     return render(request, 'game/intro.html', {})
 
-def level(request, url_key):
+def level(request, level_code):
 	for i in range(len(levels)):
 		level = levels[i]
-		if url_key == level.url_key:
-			return render(request, 'game/level%d.html' % (i + 1))
-			# else:
-			# 	# return render(request, 'game/base.html', {})
-			# 	return HttpResponse("Level: %d, URL key: %s, passwords: %s" % (i, url_key, level.passwords))
-	return HttpResponse("Level not found for URL key: %s" % url_key)
+		if level_code == level.level_code:
+			return render(request, 'game/level.html', context={'name': level.name})
+	return HttpResponse("Level not found with code: %s" % level_code)
 
 def submit_password(request):
 	if request.method == 'POST':
@@ -31,6 +28,6 @@ def submit_password(request):
 			for possible_password in level.passwords:
 				print "Possible password: %s" % possible_password
 				if possible_password == password:
-					redirect_url = reverse("level", kwargs={"url_key": level.url_key})
+					redirect_url = reverse("level", kwargs={"level_code": level.level_code})
 					return HttpResponse(json.dumps({"redirect": redirect_url}))
 		return HttpResponseForbidden()

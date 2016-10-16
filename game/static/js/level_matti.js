@@ -1,24 +1,3 @@
-// Evolution
-// 1. (E)
-// 2. (V)
-// 3. (O)
-// 4. (L)
-// 5. (U)
-// 6. (T)
-// 7. (I)
-// 8. (O)
-// 9. (N)
-
-// Where does Matti hide when the shadow threatens his soul?
-// Which type of bird does Morris like to keep?
-// How many flies did Dad hunt?
-// Among the flies that Dad hunted, how many remained in his nose?
-// What's the English name of the bird that comes in the fall?
-// What's the next one: Preservation, Presentation, Revolution, Resolution...
-// Who should return to the nest we've built together?
-// It's clear to us that our nose is always what? (literal translation)
-// This is my -- childhood.
-
 var g;
 
 function init() {
@@ -57,17 +36,13 @@ function showQuestionButtons() {
 		var text = canvas.text(curX + buttonEdge / 2, curY + buttonEdge / 2, "?").attr({font: "30px " + fontTahoma, fill: "#000"});
 
 		setClicker(button, curX, curY, buttonEdge, cradius, i);
-		// setClicker(button);
-		
-
 	}
 }
 
 function setClicker(button, x, y, buttonEdge, cradius, i) {
-// function setClicker(button) {			
 	var clicker = canvas.rect(x, y, buttonEdge, buttonEdge, cradius).attr({fill: "transparent", "stroke-width": 0});
 	var hoverIn = function() {
-		button.attr({"stroke-width": 3, stroke: yellow});
+		button.attr({"stroke-width": 3, stroke: yellow});	
 	};
 	var hoverOut = function() {
 		button.attr({"stroke-width": 1, stroke: torquise});
