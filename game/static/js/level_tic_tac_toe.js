@@ -9,6 +9,8 @@ var y = canvasHeight / 2 + 80;
 var userPlaying;
 var spaces;
 
+var boardDisabled;
+
 function init() {
 	resetGame();
 
@@ -42,15 +44,25 @@ function addClicker(i, x, y) {
 	var clicker = canvas.rect(x, y, edgeLength / 3, edgeLength / 3).attr({fill: "transparent", "stroke-width": 0});
 	clicker.id = "c" + i;
 	clicker.click(function() {
+		if (boardDisabled) {
+			return;
+		}
 		onClick(i, userPlaying);
 	});
 
-	var hoverIn = function() { clicker.attr({"stroke-width": 3, "stroke": "#ccc", "stroke-opacity": 0.5}); };
+	var hoverIn = function() {
+		if (boardDisabled) {
+			return;
+		}
+		clicker.attr({"stroke-width": 3, "stroke": "#ccc", "stroke-opacity": 0.5});
+	};
 	var hoverOut = function() { clicker.attr({"stroke-width": 0}); };
 	clicker.hover(hoverIn, hoverOut);
 }
 
 function onClick(index, player) {
+	boardDisabled = true;
+
 	// Remove clicker
 	canvas.getById("c" + index).remove();
 
@@ -84,6 +96,7 @@ function onClick(index, player) {
 		} else if (player == userPlaying) {
 			randomizeMove();
 		}
+		boardDisabled = false;
 	}, 800);
 }
 
