@@ -14,15 +14,19 @@ var pages = [
 		"When you solve the challenge, good things will happen!"
 	],
 	[
-		"The type and difficulty of the challenges\nwill vary, so stay vigilant.",
-		"You might need to Google things sometimes - that's OK!"
+		"The type and difficulty of the challenges will vary.",
+		"The occasional use of Google and / or pen and paper\nis allowed and encouraged."
 	],
 	[
 		"When a level ends, you'll obtain\nthe password to unlock the next level.",
-		"You can always leave for a while and come back later.",
-		"Just always remember the last password\nyou've discovered!",
+		"That password will always unlock that same level."
 	],
 	[
+		"You can always leave for a while and come back later,\nusing the \"Go to Level\" button below.",
+		"Just always remember the last password\nyou've discovered!"
+	],
+	[
+		"If you're stuck you can always contact Auntie Tafi ;-)",
 		"Good luck!",
 		"The password for level 1 is:\nhappybirthday"
 	]
@@ -89,13 +93,19 @@ function showPreviousIntroPage() {
 
 function showIntroPage(forward) {
 	currentIntroPage = forward ? currentIntroPage + 1 : currentIntroPage - 1;
-
+	
 	resetCanvas();
 	showGoToLevelButton();
 	drawIntroArrow(true);
 	drawIntroArrow(false);
 
-	// TODO slide texts with animation
+	if (forward && currentIntroPage == 0) {
+		var arrowShiftX = 200;
+		var arrowShiftY = controllersY;
+		var x = canvasWidth - arrowShiftX;
+		var y = controllersY - 30;
+		showJumpyArrow(x, y, 1);
+	}
 
 	// Vars	
 	texts = pages[currentIntroPage];
@@ -114,44 +124,41 @@ function showIntroPage(forward) {
 		text.animate(anim);
 	}
 
-	// "Give it a try"
+	// "Jumpy arrow"
 	if (currentIntroPage == pages.length - 1) {
-		var arrowPointX = canvasWidth / 2;
-		var arrowPointY = controllersY - buttonsHeight / 2 - 5;
-		var a = 0.3;
-		var b = 0.5;
-		var arrowHeight = 50;
-		var arrowWidth = 30;
-
-		function getArrowPathStr(curArrowPointY) {
-			return getPathStr([
-					{x: arrowPointX, y: curArrowPointY},
-					{x: arrowPointX + arrowWidth / 2, y: curArrowPointY - a * arrowHeight},
-					{x: arrowPointX + b * arrowWidth / 2, y: curArrowPointY - a * arrowHeight},
-					{x: arrowPointX + b * arrowWidth / 2, y: curArrowPointY - arrowHeight},
-					{x: arrowPointX - b * arrowWidth / 2, y: curArrowPointY - arrowHeight},
-					{x: arrowPointX - b * arrowWidth / 2, y: curArrowPointY - a * arrowHeight},
-					{x: arrowPointX - arrowWidth / 2, y: curArrowPointY - a * arrowHeight}
-			]);
-		}
-
-		// Arrow animation
-		var duration = 500;
-		var arrowShift = 20;
-		var path = canvas.path(getArrowPathStr(arrowPointY - arrowShift)).attr({fill: pink});
-		var anim = Raphael.animation({path: getArrowPathStr(arrowPointY)}, duration, function() {
-			path.animate({path: getArrowPathStr(arrowPointY - arrowShift)}, duration, function() {
-				path.animate(anim);
-			});
-		});
-		path.animate(anim);
-		// path.animate({path: getArrowPathStr(arrowPointY)}, duration, function() {
-		// 	path.animate({path: getArrowPathStr(arrowPointY - arrowShift)}, duration);
-		// });
+		showJumpyArrow(canvasWidth / 2, controllersY - buttonsHeight / 2 - 5, 1);
 	}
 }
 
+function showJumpyArrow(arrowPointX, arrowPointY, factor) {
+	var a = 0.3;
+	var b = 0.5;
+	var arrowHeight = 50;
+	var arrowWidth = 30;
 
+	function getArrowPathStr(curArrowPointY) {
+		return getPathStr([
+				{x: arrowPointX, y: curArrowPointY},
+				{x: arrowPointX + arrowWidth / 2, y: curArrowPointY - a * arrowHeight},
+				{x: arrowPointX + b * arrowWidth / 2, y: curArrowPointY - a * arrowHeight},
+				{x: arrowPointX + b * arrowWidth / 2, y: curArrowPointY - arrowHeight},
+				{x: arrowPointX - b * arrowWidth / 2, y: curArrowPointY - arrowHeight},
+				{x: arrowPointX - b * arrowWidth / 2, y: curArrowPointY - a * arrowHeight},
+				{x: arrowPointX - arrowWidth / 2, y: curArrowPointY - a * arrowHeight}
+		]);
+	}
+
+	// Arrow animation
+	var duration = 500;
+	var arrowShift = 20;
+	var path = canvas.path(getArrowPathStr(arrowPointY - arrowShift)).attr({fill: pink});
+	var anim = Raphael.animation({path: getArrowPathStr(arrowPointY)}, duration, function() {
+		path.animate({path: getArrowPathStr(arrowPointY - arrowShift)}, duration, function() {
+			path.animate(anim);
+		});
+	});
+	path.animate(anim);
+}
 
 function drawIntroArrow(forward) {
 	// Vars
