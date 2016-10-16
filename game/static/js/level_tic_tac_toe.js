@@ -249,7 +249,7 @@ function onWin() {
 
 	// Ribbon text
 	var revealAttr = {font: '30px ' + fontGeorgia, fill: red};
-	var ribbonText = canvas.text(ribbonX + ribbonWidth / 2, ribbonY + ribbonHeight / 2, "Zoe is 2").attr(revealAttr);
+	var ribbonText = canvas.text(ribbonX + ribbonWidth / 2, ribbonY + ribbonHeight / 2, "נהג חדש").attr(revealAttr);
 
 	// Animation
 	var animDuration = 1000;
