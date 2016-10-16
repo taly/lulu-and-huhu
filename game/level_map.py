@@ -9,7 +9,8 @@ class Level(object):
 
 levels = [
 	Level("69152a4bfd4a", "harry_potter", ["happybirthday"]),
-	Level("8fbee8ca1649", "tic_tac_toe", ["phoenix"]),
+	Level("f3af3da13739", "chuchkovich", ["phoenix"]),
+	Level("8fbee8ca1649", "tic_tac_toe", ["hamlor", "chamlor", "hamtalor", "chamtalor"]),
 	Level("a0279df3b51e", "matti", ["beepbeep"]),
 	Level("d8a21e8b9bad", "memory", ["piano"]),
 ]

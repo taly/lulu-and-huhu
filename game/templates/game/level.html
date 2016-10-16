@@ -3,4 +3,7 @@
 {% block js %}
 	{{ block.super }}
     <script type="text/javascript" src="/static/js/level_{{ name }}.js"></script>
+    <script type="text/javascript">
+    	var LEVEL = {{ level_num }};
+	</script>
 {% endblock %}

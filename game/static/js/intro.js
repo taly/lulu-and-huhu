@@ -27,6 +27,9 @@ var pages = [
 	],
 	[
 		"If you're stuck you can always contact Auntie Tafi ;-)",
+		"Tech note: the passwords are based on the browser's dialog prompt,\nso don't check the \"prevent addional dialogs\" box if it appears."
+	],
+	[
 		"Good luck!",
 		"The password for level 1 is:\nhappybirthday"
 	]
@@ -114,10 +117,17 @@ function showIntroPage(forward) {
 	var topY = 50;
 	var bottomY = controllersY - buttonsHeight / 2 - 20;
 	var gap = (bottomY - topY) / (texts.length + 1);
-	var attr = {font: '26px ' + fontGeorgia, fill: torquiseDark};
+	var regFontSize = '26px';
+	var smallFontSize = '22px';
+	var attr = {font: regFontSize + ' ' + fontGeorgia, fill: torquiseDark};
 
 	// Texts
 	for (var i = 0; i < texts.length; i++) {
+		if (texts[i].indexOf("dialog") != -1) {
+			attr.font = attr.font.replace(regFontSize, smallFontSize);
+		} else {
+			attr.font = attr.font.replace(smallFontSize, regFontSize);
+		}
 		var y = topY + (i + 1)*gap;
 		var text = canvas.text(x, y, texts[i]).attr(attr);
 		var anim = Raphael.animation({x: canvasWidth / 2}, 800, "elastic").delay(200 * i);

@@ -1,5 +1,5 @@
 function init() {
-	showLevelTitle(1);
+	showLevelTitle();
 	var attr = {font: '20px ' + fontGeorgia, fill: pinkDark};
 	var middleY = canvasHeight / 2;
 	var shift = 30;

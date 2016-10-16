@@ -1,7 +1,7 @@
 var g;
 
 function init() {
-	showLevelTitle(3);
+	showLevelTitle();
 	var attr = {font: '20px ' + fontGeorgia, fill: pinkDark};
 	canvas.text(titleX, titleY + 50, "Prepare for some Matti Caspi trivia questions!").attr(attr);
 

@@ -112,7 +112,7 @@ function isBoardFull() {
 function resetGame() {
 	resetCanvas();
 
-	showLevelTitle(2);
+	showLevelTitle();
 	var attr = {font: '20px ' + fontGeorgia, fill: pinkDark};
 	canvas.text(titleX, titleY + 50, "How about a game of tic-tac-toe?").attr(attr);
 	

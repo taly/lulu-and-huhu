@@ -68,9 +68,9 @@ function drawLine(x1, y1, x2, y2, attr) {
 	}
 }
 
-function showLevelTitle(level) {
+function showLevelTitle() {
 	var attr = {font: '36px ' + fontGeorgia, fill: torquiseDark};
-	canvas.text(titleX, titleY, "Level " + level).attr(attr);
+	canvas.text(titleX, titleY, "Level " + LEVEL).attr(attr);
 }
 
 function showStandardButton(x, y, buttonText, onClick) {

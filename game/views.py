@@ -13,7 +13,7 @@ def level(request, level_code):
 	for i in range(len(levels)):
 		level = levels[i]
 		if level_code == level.level_code:
-			return render(request, 'game/level.html', context={'name': level.name})
+			return render(request, 'game/level.html', context={'name': level.name, 'level_num': (i+1)})
 	return HttpResponse("Level not found with code: %s" % level_code)
 
 def submit_password(request):
