@@ -85,7 +85,7 @@ function onSuccess(redirectUrl) {
 	img.animate({transform: "s1r1800"}, 1000, "easeOut");
 
 	// Continue button
-	showStandardButton(canvasWidth / 2, canvasHeight - 50, "Continue", function(redirectUrl) {
+	showStandardButton(canvasWidth / 2, canvasHeight - 50, "Continue", function() {
 		window.location = redirectUrl;
 	});
 }

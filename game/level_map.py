@@ -8,9 +8,10 @@ class Level(object):
 
 
 levels = [
-	Level("69152a4bfd4a", "harry_potter", ["happybirthday"]),
-	Level("f3af3da13739", "chuchkovich", ["phoenix"]),
-	Level("8fbee8ca1649", "tic_tac_toe", ["hamlor", "chamlor", "hamtalor", "chamtalor"]),
-	Level("a0279df3b51e", "matti", ["beepbeep"]),
+	Level("69152a4bfd4a", "harry_potter", ["happybirthday"]), # Zoe 1 in sink
+	Level("f3af3da13739", "chuchkovich", ["phoenix"]), # Lamed & Zeidale
+	Level("8fbee8ca1649", "tic_tac_toe", ["hamlor", "chamlor", "hamtalor", "chamtalor"]), # Zoe 2 in car
+	# TODO add small Lamed level here
+	Level("a0279df3b51e", "matti", ["beepbeep"]), # Zoe 3 + Lamed with popsicla
 	Level("d8a21e8b9bad", "memory", ["piano"]),
 ]
