@@ -1,13 +1,11 @@
 var CARD_SRC = ["yuri", "yuki", "pitzy", "tuli", "pushkin"];
-var SHOWN = 1;
-var HIDDEN = 0;
 var NONE = -1;
 
 var clickDisabled;
 var firstClicked = NONE;
+var numShown;
 
 var topCards, bottomCards;
-var topCardsState, bottomCardsState;
 
 function init() {
 	showLevelTitle();
@@ -21,20 +19,11 @@ function init() {
 }
 
 function resetCards() {
-	// Reset states
-	topCardsState = [];
-	bottomCardsState = [];
-	for (var i = 0; i < CARD_SRC.length; i++) {
-		topCardsState[i] = HIDDEN;
-		bottomCardsState[i] = HIDDEN;
-	}
-
-	// Draw cards
+	numShown = 0;
 	for (var i = 0; i < CARD_SRC.length; i++) {
 		drawCard(i, true, true);
 		drawCard(i, false, true);
 	}
-
 }
 
 function drawCard(i, top, hidden) {
@@ -93,8 +82,7 @@ function onCardClicked(i, top) {
 	}
 
 	drawCard(i, top, false);
-	var toUpdate = top ? topCardsState : bottomCardsState;
-	toUpdate[i] = SHOWN;
+	numShown++;
 
 	if (firstClicked == NONE) {
 		firstClicked = top ? i : i + CARD_SRC.length;
@@ -103,11 +91,14 @@ function onCardClicked(i, top) {
 		var firstClickedType = top ? bottomCards[firstClicked - CARD_SRC.length] : topCards[firstClicked];
 		if (currentClickedType == firstClickedType) {
 			firstClicked = NONE;
-			// TODO check if we won
+			
+			if (numShown == CARD_SRC.length * 2) {
+				clickDisabled = true;
+				setTimeout(onWin, 800);
+			}
 		} else {
 			clickDisabled = true;
 			setTimeout(function() {
-				// TODO disable everything
 				resetCards();
 				firstClicked = NONE;
 				clickDisabled = false;
@@ -128,7 +119,10 @@ function randomizePositions() {
 }
 
 function prepareCache() {
-	// TODO
+	for (var i = 0; i < CARD_SRC.length; i++) {
+		(new Image()).src = "/static/img/" + CARD_SRC[i] + "_1.png";
+		(new Image()).src = "/static/img/" + CARD_SRC[i] + "_2.png";
+	}
 }
 
 function shuffle(array) {
@@ -148,6 +142,21 @@ function shuffle(array) {
   }
 
   return array;
+}
+
+function onWin() {
+	resetCanvas();
+
+	// Title
+	var titleAttr = {font: '30px ' + fontGeorgia, fill: torquiseDark};
+	canvas.text(titleX, 70, "You win!").attr(titleAttr);
+
+	// TODO payoff + next level password reveal
+
+	// Continue button
+	showAnswerButton(canvasWidth / 2, canvasHeight - 50, "Next level", function(redirectUrl) {
+		window.location = redirectUrl;
+	});
 }
 
 
