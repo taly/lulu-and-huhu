@@ -1,5 +1,4 @@
 function init() {
-	showLevelTitle();
 	showSpace();
 	showLevelTitle();
 	var attr = {font: '24px ' + fontGeorgia, fill: pink};

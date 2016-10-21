@@ -15,7 +15,7 @@ levels = [
 	Level("a0279df3b51e", "matti", ["beepbeep"]), # Zoe 3 + Lamed with popsicle
 	Level("d8a21e8b9bad", "memory", ["piano"]), # Lamed - payoff TODO
 	Level("179ef5e3aef6", "hitchhiker", ["kiliv", "kelev"]), # Payoff TODO video Lamed in the tree reciting the final frontier!!!
-	Level("a810928aafe6", "hangman", ["space"]), # Payoff TODO
+	Level("a810928aafe6", "hangman", ["space"]), # Lamed & Zoe small with the shoes - need to be earlier
 ]
 
 # UUID pool:
