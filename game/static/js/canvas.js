@@ -70,7 +70,7 @@ function drawLine(x1, y1, x2, y2, attr) {
 
 function showLevelTitle() {
 	var attr = {font: '36px ' + fontGeorgia, fill: torquiseDark};
-	canvas.text(titleX, titleY, "Level " + LEVEL).attr(attr);
+	canvas.text(titleX, titleY, "Level " + level).attr(attr);
 }
 
 function showStandardButton(x, y, buttonText, onClick) {
@@ -92,4 +92,23 @@ function showAnswerButton(x, y, buttonText, onSuccess) {
 	showStandardButton(x, y, buttonText, function() {
 		promptPassword(onSuccess);
 	});
+}
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
 }
