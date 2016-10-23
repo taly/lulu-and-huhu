@@ -75,17 +75,42 @@ function showLevelTitle() {
 
 function showStandardButton(x, y, buttonText, onClick) {
 	// Button
-	var goToLevelButton = canvas.rect(x - buttonsWidth / 2, y - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: yellow, stroke: pink});
-	var gotToLevelText = canvas.text(canvasWidth / 2, y, buttonText).attr({font: 'Bold 26px ' + fontTahoma, fill: torquiseVeryLight, stroke: "#000"});
+	var buttonObj = canvas.rect(x - buttonsWidth / 2, y - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: yellow, stroke: pink});
+	buttonObj.id = "standardButton";
+	var textObj = canvas.text(canvasWidth / 2, y, buttonText).attr({font: 'Bold 26px ' + fontTahoma, fill: torquiseVeryLight, stroke: "#000"});
+	textObj.id = "standardButtonText";
 
 	// Clicker
 	var clicker = canvas.rect(x - buttonsWidth / 2, y - buttonsHeight / 2, buttonsWidth, buttonsHeight, 10).attr({fill: "transparent", "stroke-width": 0});
+	clicker.id = "standardButtonClicker";
 	clicker.click(onClick);
 
 	// Hover
-	var hoverIn = function() { gotToLevelText.attr({fill: pink}); goToLevelButton.attr({"stroke-width": 2}); };
-	var hoverOut = function() { gotToLevelText.attr({fill: torquiseVeryLight}); ; goToLevelButton.attr({"stroke-width": 1}); };
+	var hoverIn = function() { textObj.attr({fill: pink}); buttonObj.attr({"stroke-width": 2}); };
+	var hoverOut = function() { textObj.attr({fill: torquiseVeryLight}); ; buttonObj.attr({"stroke-width": 1}); };
 	clicker.hover(hoverIn, hoverOut);
+}
+
+function removeStandardButton() {
+	var buttonObj = canvas.getById("standardButton");
+	var textObj = canvas.getById("standardButtonText");
+	var buttonClicker = canvas.getById("standardButtonClicker");
+	if (buttonObj != null) {
+		buttonObj.remove();
+	}
+	if (textObj != null) {
+		textObj.remove();
+	}
+	if (buttonClicker != null) {
+		buttonClicker.remove();
+	}
+}
+
+function isStandardButtonShown() {
+	var buttonObj = canvas.getById("standardButton");
+	var textObj = canvas.getById("standardButtonText");
+	var buttonClicker = canvas.getById("standardButtonClicker");
+	return (buttonObj != null && textObj != null && buttonClicker != null);
 }
 
 function showAnswerButton(x, y, buttonText, onSuccess) {

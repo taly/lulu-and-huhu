@@ -1,6 +1,5 @@
 var IMG_DIAMETER = 60;
-var SIBLING_DIST = 40;
-var MARRIAGE_DIST = 35;
+var NOMINAL_DIST = 35;
 
 var LEFT_X = 40;
 var RIGHT_X = 50;
@@ -8,9 +7,40 @@ var TOP_Y = 100;
 var MIDDLE_Y = 410;
 var BOTTOM_Y = 530;
 
-var personCoords = {};
+var PEOPLE = [
+	"zeidale", "babi", "yula", "toni", "shmuel", "natasha", "dadi", "michael", "danit",
+	"guy", "liory", "ant", "taly", "yuval", "cousin1", "cousin2", "cousin3", "zoe"];
+
+var allowedPositions = [
+	["zeidale", "babi"], // 0
+	["zeidale", "babi"], // 1
+	["yula", "toni"],	 // 2
+	["yula", "toni"],	 // 3
+	["shmuel"],			 // 4
+	["natasha"],		 // 5
+	["dadi"],			 // 6
+	["michael"],		 // 7
+	["danit"],			 // 8
+	["guy"],			 // 9
+	["liory"],			 // 10
+	["ant"],			 // 11
+	["taly"],			 // 12
+	["yuval"],			 // 13
+	["cousin1", "cousin2", "cousin3"], // 14
+	["cousin1", "cousin2", "cousin3"], // 15
+	["cousin1", "cousin2", "cousin3"], // 16
+	["zoe"]				 // 17
+];
+
+// var personCoords = {};
+var treePositions = [];
+var filledPositions = [];
 
 function init() {
+	for (var i = 0; i < PEOPLE.length; i++) {
+		filledPositions[i] = null;
+	}
+
 	var tempTitleY = titleY - 50; // Just for this level we need a higher title since the family tree takes a lot of real estate
 	var attr = {font: '36px ' + fontGeorgia, fill: torquiseDark};
 	canvas.text(titleX, tempTitleY, "Level " + LEVEL).attr(attr);
@@ -32,24 +62,24 @@ function getRes(name) {
 
 function drawTree() {
 	var genHeight = (MIDDLE_Y - TOP_Y) / 4;
-	var q = MARRIAGE_DIST;
-	
-	// Generation 4
+	var q = NOMINAL_DIST;
 	var d = IMG_DIAMETER;
 	var r = d / 2;
+	
+	// Generation 4
 	var x = LEFT_X;
 	var y = MIDDLE_Y - genHeight/2 - r;
 	var gen4Y = y;
-	for (var i = 1; i <= 3; i++) {
+	for (var i = 0; i < 3; i++) { // Left: michael & danit's kids
 		// canvas.image(getRes("cousin" + i), x, y, d, d);
 		canvas.circle(x + r, y + r, r);
-		personCoords["cousin" + i] = {x: x, y: y};
+		treePositions[i + 14] = {x: x, y: y};
 		x += q + d;
 	}
 	x += 0.5*q;
 	// canvas.image(getRes("zoe"), x, y, d, d);
 	canvas.circle(x + r, y + r, r);
-	personCoords["zoe"] = {x: x, y: y};
+	treePositions[17] = {x: x, y: y}; // Right: zoe <3
 
 	// Generation 3
 	var hermansWidth = 3*d + 2*q;
@@ -57,19 +87,17 @@ function drawTree() {
 	x = gen3Start;
 	y -= genHeight;
 	var gen3Y = y;
-	var gen3Left = ["michael", "danit", "guy"];
-	for (var i = 0; i < gen3Left.length; i++) {
+	for (var i = 0; i < 3; i++) { // Left: michael, danit, guy
 		// canvas.image(getRes(gen3Left[i]), x, y, d, d);
 		canvas.circle(x + r, y + r, r);
-		personCoords[gen3Left[i]] = {x: x, y: y};
+		treePositions[i + 7] = {x: x, y: y};
 		x += d + q;	
 	}
 	x += 1.5*q;
-	var gen3Right = ["liory", "ant", "taly", "yuval"];
-	for (var i = 0; i < gen3Right.length; i++) {
+	for (var i = 0; i < 4; i++) { // Right: liory, ant, taly, yuval
 		// canvas.image(getRes(gen3Right[i]), x, y, d, d);
 		canvas.circle(x + r, y + r, r);
-		personCoords[gen3Right[i]] = {x: x, y: y};
+		treePositions[i + 10] = {x: x, y: y};
 		x += d + q;		
 	}
 
@@ -77,72 +105,70 @@ function drawTree() {
 	y -= genHeight;
 	x = gen3Start + d + q;
 	var gen2Y = y;
-	var gen2Left = ["yula", "toni", "shmuel"];
-	for (var i = 0; i < gen2Left.length; i++) {
+	for (var i = 0; i < 3; i++) { // Left: yula, toni, shmuel
 		// canvas.image(getRes(gen2Left[i]), x, y, d, d);
 		canvas.circle(x + r, y + r, r);
-		personCoords[gen2Left[i]] = {x: x, y: y};
+		treePositions[i + 2] = {x: x, y: y};
 		x += d + q;
 	}
 	x += 2*q;
 	var gen2RightStart = x;
-	var gen2Right = ["natasha", "dadi"];
-	for (var i = 0; i < gen2Right.length; i++) {
+	// var gen2Right = ["natasha", "dadi"];
+	for (var i = 0; i < 2; i++) { // Right: natasha, dadi
 		// canvas.image(getRes(gen2Right[i]), x, y, d, d);
 		canvas.circle(x + r, y + r, r);
-		personCoords[gen2Right[i]] = {x: x, y: y};
-		x += d + q;
+		treePositions[i + 5] = {x: x, y: y};
+ 		x += d + q;
 	}
 
 	// Generation 1
-	var gen1 = ["babi", "zeidale"];
 	y -= genHeight;
 	x = gen2RightStart - 0.5*d - 0.5*q;
 	var gen1Y = y;
-	for (var i = 0; i < gen1.length; i++) {
+	for (var i = 0; i < 2; i++) { // babi, zeidale
 		// canvas.image(getRes(gen1[i]), x, y, d, d);
 		canvas.circle(x + r, y + r, r);
-		personCoords[gen1[i]] = {x: x, y: y};
+		treePositions[i] = {x: x, y: y};
 		x += d + q;
 	}
 
 	// Lines - together
 	var h2 = genHeight/2;
-	drawLine(personCoords["babi"].x + d, gen1Y + h2, personCoords["zeidale"].x, gen1Y + h2, {});
-	drawLine(personCoords["yula"].x + d, gen2Y + h2, personCoords["toni"].x, gen2Y + h2, {});
-	drawLine(personCoords["natasha"].x + d, gen2Y + h2, personCoords["dadi"].x, gen2Y + h2, {});
-	drawLine(personCoords["michael"].x + d, gen3Y + h2, personCoords["danit"].x, gen3Y + h2, {});
-	drawLine(personCoords["liory"].x + d, gen3Y + h2, personCoords["ant"].x, gen3Y + h2, {});
-	drawLine(personCoords["taly"].x + d, gen3Y + h2, personCoords["yuval"].x, gen3Y + h2, {});
+	drawLine(treePositions[0].x + d, gen1Y + h2, treePositions[1].x, gen1Y + h2, {}); // babi <-> zeidale
+	drawLine(treePositions[2].x + d, gen2Y + h2, treePositions[3].x, gen2Y + h2, {}); // yula <-> toni
+	drawLine(treePositions[5].x + d, gen2Y + h2, treePositions[6].x, gen2Y + h2, {}); // natasha <-> dadi
+	drawLine(treePositions[7].x + d, gen3Y + h2, treePositions[8].x, gen3Y + h2, {}); // michael <-> danit
+	drawLine(treePositions[10].x + d, gen3Y + h2, treePositions[11].x, gen3Y + h2, {}); // liory <-> ant
+	drawLine(treePositions[12].x + d, gen3Y + h2, treePositions[13].x, gen3Y + h2, {}); // taly <-> yuval
 
 	// Lines - divorced
 	var attr = {"stroke-dasharray": "--", stroke: "#bbb"};
-	drawLine(personCoords["shmuel"].x + d, gen2Y + h2, personCoords["natasha"].x, gen2Y + h2, attr);
-	drawLine(personCoords["guy"].x + d, gen3Y + h2, personCoords["liory"].x, gen3Y + h2, attr);
+	drawLine(treePositions[4].x + d, gen2Y + h2, treePositions[5].x, gen2Y + h2, attr); // shmuel </-> natasha
+	drawLine(treePositions[9].x + d, gen3Y + h2, treePositions[10].x, gen3Y + h2, attr); // guys </-> liory
 
-	// Lines - single kids
-	drawLine(personCoords["natasha"].x + r, personCoords["natasha"].y, personCoords["natasha"].x + r, personCoords["natasha"].y - h2);
-	drawLine(personCoords["liory"].x + r, personCoords["liory"].y, personCoords["liory"].x + r, personCoords["liory"].y - h2);
-	drawLine(personCoords["taly"].x + 0.5*r, personCoords["taly"].y + 5, personCoords["taly"].x + 0.5*r, personCoords["taly"].y - h2);
-	drawLine(personCoords["zoe"].x + r, personCoords["zoe"].y, personCoords["zoe"].x + r, personCoords["zoe"].y - h2);
-	drawLine(personCoords["cousin2"].x + r, personCoords["cousin2"].y, personCoords["cousin2"].x + r, personCoords["cousin2"].y - h2);
+	// Lines - single / middle kids
+	drawLine(treePositions[5].x + r, treePositions[5].y, treePositions[5].x + r, treePositions[5].y - h2); // natasha
+	drawLine(treePositions[10].x + r, treePositions[10].y, treePositions[10].x + r, treePositions[10].y - h2); // liory
+	drawLine(treePositions[12].x + 0.5*r, treePositions[12].y + 5, treePositions[12].x + 0.5*r, treePositions[12].y - h2); // taly
+	drawLine(treePositions[17].x + r, treePositions[17].y, treePositions[17].x + r, treePositions[17].y - h2); // zoe
+	drawLine(treePositions[15].x + r, treePositions[15].y, treePositions[15].x + r, treePositions[15].y - h2); // cousin2
 
 	// Small line from parents to even-numbered sets of children
-	drawLine(personCoords["yula"].x + d + q/2, gen2Y + h2, personCoords["yula"].x + d + q/2, TOP_Y + 2*genHeight, {});
+	drawLine(treePositions[2].x + d + q/2, gen2Y + h2, treePositions[2].x + d + q/2, TOP_Y + 2*genHeight, {}); // yula
 
 	// Horizontal sibling connector
-	drawLine(personCoords["cousin1"].x + r, MIDDLE_Y - genHeight, personCoords["cousin3"].x + r, MIDDLE_Y - genHeight, {});
-	drawLine(personCoords["danit"].x + r, MIDDLE_Y - 2*genHeight, personCoords["guy"].x + r, MIDDLE_Y - 2*genHeight, {});
+	drawLine(treePositions[14].x + r, MIDDLE_Y - genHeight, treePositions[16].x + r, MIDDLE_Y - genHeight, {}); // cousin1 -- cousin2
+	drawLine(treePositions[8].x + r, MIDDLE_Y - 2*genHeight, treePositions[9].x + r, MIDDLE_Y - 2*genHeight, {}); // danit -- guy
 
 	// Remaining vertical sibling lines
-	drawLine(personCoords["cousin1"].x + r, MIDDLE_Y - genHeight, personCoords["cousin1"].x + r, personCoords["cousin1"].y, {});
-	drawLine(personCoords["cousin3"].x + r, MIDDLE_Y - genHeight, personCoords["cousin3"].x + r, personCoords["cousin3"].y, {});
-	drawLine(personCoords["danit"].x + r, MIDDLE_Y - 2*genHeight, personCoords["danit"].x + r, personCoords["danit"].y, {});
-	drawLine(personCoords["guy"].x + r, MIDDLE_Y - 2*genHeight, personCoords["guy"].x + r, personCoords["guy"].y, {});
+	drawLine(treePositions[14].x + r, MIDDLE_Y - genHeight, treePositions[14].x + r, treePositions[14].y, {}); // cousin1
+	drawLine(treePositions[16].x + r, MIDDLE_Y - genHeight, treePositions[16].x + r, treePositions[16].y, {}); // cousin3
+	drawLine(treePositions[8].x + r, MIDDLE_Y - 2*genHeight, treePositions[8].x + r, treePositions[8].y, {}); // danit
+	drawLine(treePositions[9].x + r, MIDDLE_Y - 2*genHeight, treePositions[9].x + r, treePositions[9].y, {}); // guy
 }
 
 function drawFamilyMemberBank() {
-	var keys = Object.keys(personCoords);
+	var keys = PEOPLE;
 	shuffle(keys);
 	
 	var d = IMG_DIAMETER;
@@ -152,12 +178,14 @@ function drawFamilyMemberBank() {
 	for (var i = 0; i < 9; i++) {
 		var x = LEFT_X + i * (d + spacing);
 		var pic = canvas.image(getRes(keys[i]), x, y, d, d).attr(attr);
+		pic.id = keys[i];
 		setDragMethods(pic);
 	}
 	y += 0.9*d;
 	for (var i = 9; i < 18; i++) {
 		var x = LEFT_X + d/2 + spacing/2 + (i-9) * (d + spacing);
 		var pic = canvas.image(getRes(keys[i]), x, y, d, d).attr(attr);
+		pic.id = keys[i];
 		setDragMethods(pic);
 	}
 }
@@ -166,6 +194,11 @@ function setDragMethods(pic) {
 	var onDragStart = function() {
 		this.ox = this.attr("x");
 		this.oy = this.attr("y");
+		for (var i = 0; i < filledPositions.length; i++) {
+			if (filledPositions[i] == this.id) {
+				filledPositions[i] = null;
+			}
+		}
 	};
 	var onMove = function(dx, dy) {
 		this.attr({x: this.ox + dx, y: this.oy + dy});
@@ -175,50 +208,65 @@ function setDragMethods(pic) {
 			highlight.remove();	
 		}
 
-		var keys = Object.keys(personCoords);
 		var found = false;
-		for (var i = 0; i < keys.length; i++) {
-			var cur = personCoords[keys[i]];
+		for (var i = 0; i < PEOPLE.length; i++) {
+			var cur = treePositions[i];
 			var targetRect = {left: cur.x, right: cur.x + IMG_DIAMETER, top: cur.y, bottom: cur.y + IMG_DIAMETER};
 			var x = this.attr("x");
 			var y = this.attr("y");
 			var myRect = {left: x, right: x + IMG_DIAMETER, top: y, bottom: y + IMG_DIAMETER};
 			// debugRects(targetRect, myRect);
-			if (rectIntersect(myRect, targetRect)) {
+			if (filledPositions[i] == null && rectIntersect(myRect, targetRect)) {
 				var c = canvas.circle(cur.x + IMG_DIAMETER/2, cur.y + IMG_DIAMETER/2, IMG_DIAMETER/2).attr({fill: yellow, opacity: 0.3})
 				c.id = "highlight";
 				found = true;
 				break;
 			}
 		}
-		// if (!found) {
-		// 	var highlight = canvas.getById("highlight");
-		// 	if (highlight != null) {
-		// 		highlight.remove();	
-		// 	}
-		// }
 	};
 	var onDragEnd = function() {
-		var closest = {x: pic.ox, y: pic.oy};
-		var epsilonDist = 20;
-		var keys = Object.keys(personCoords);
-		for (var i = 0; i < keys.length; i++) {
-			var cur = personCoords[keys[i]];
+		for (var i = 0; i < PEOPLE.length; i++) {
+			var cur = treePositions[i];
 			var targetRect = {left: cur.x, right: cur.x + IMG_DIAMETER, top: cur.y, bottom: cur.y + IMG_DIAMETER};
 			var x = this.attr("x");
 			var y = this.attr("y");
 			var myRect = {left: x, right: x + IMG_DIAMETER, top: y, bottom: y + IMG_DIAMETER};
-			if (rectIntersect(myRect, targetRect)) {
+			if (filledPositions[i] == null && rectIntersect(myRect, targetRect)) {
 				this.attr({x: cur.x, y: cur.y});
 				var highlight = canvas.getById("highlight");
 				if (highlight != null) {
 					highlight.remove();	
 				}
+				filledPositions[i] = this.id;
 				break;
 			}
 		}
+		var allFilled = true;
+		for (var i = 0; i < filledPositions.length; i++) {
+			if (filledPositions[i] == null) {
+				allFilled = false;
+				break;
+			}
+		}
+		if (allFilled && !isStandardButtonShown()) {
+			showStandardButton(canvasWidth / 2, MIDDLE_Y + (BOTTOM_Y - MIDDLE_Y)/2, "Check Tree", onCheckTree);
+		} else {
+			removeStandardButton();
+		}
 	};
 	pic.drag(onMove, onDragStart, onDragEnd);
+}
+
+function onCheckTree() {
+	for (var i = 0; i < PEOPLE.length; i++) {
+		var filled = filledPositions[i];
+		var allowed = allowedPositions[i];
+		if (allowed.indexOf(filled) == -1) {
+			alert("Something's not right! Keep trying ;)");
+			return;
+		}
+	}
+	// TODO onWin
 }
 
 function debugRects(r1, r2) {
