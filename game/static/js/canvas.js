@@ -137,3 +137,17 @@ function shuffle(array) {
 
   return array;
 }
+
+function showDialog(text, type) {
+	$("#dialog").dialog({
+	  dialogClass: "no-close",
+	  buttons: [
+	    {
+	      text: "OK",
+	      click: function() {
+	        $(this).dialog("close");
+	      }
+	    }
+	  ]
+	});
+}

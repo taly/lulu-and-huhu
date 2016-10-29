@@ -18,10 +18,10 @@ levels = [
 	Level("a810928aafe6", "hangman", ["space"]), # Lamed & Zoe small with the shoes - need to be earlier
 	Level("821826bfa066", "family_tree", ["whatevs"]), # Payoff TODO
 	Level("ebec8e921cc9", "objects_riddle", ["whatevs"]), # Payoff TODO
+	Level("42860a1fc5f9", "song", ["hi"]),
 ]
 
 # UUID pool:
-# 42860a1fc5f9
 # 27e2f82fa5f9
 # 29b652c8b946
 # 5acac80916a2

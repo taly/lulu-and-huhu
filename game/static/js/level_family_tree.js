@@ -46,7 +46,7 @@ function init() {
 	canvas.text(titleX, tempTitleY, "Level " + LEVEL).attr(attr);
 	
 	var attr = {font: '20px ' + fontGeorgia, fill: pink};
-	canvas.text(canvasWidth / 2, tempTitleY + 40, "Drag the bottom pictures to their positions in the family tree!").attr(attr);
+	canvas.text(canvasWidth / 2, tempTitleY + 40, "Drag the bottom pictures to their positions in the (partial) family tree!").attr(attr);
 
 	var lineAttr = {"stroke-dasharray": "-.", stroke: "#aaa"};
 	// var lineAttr = {};
