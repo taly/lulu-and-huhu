@@ -1,10 +1,15 @@
 function init() {
 	showLevelTitle();
-	var attr = {font: '20px ' + fontGeorgia, fill: pinkDark};
+	
 	var middleY = canvasHeight / 2;
-	var shift = 30;
-	canvas.text(titleX, middleY - shift, "Let's start with an easy one.").attr(attr);
-	canvas.text(titleX, middleY + shift, "Harry Potter's wand contains a feather belonging to which type of bird?").attr(attr);
+	var width = 226;
+	var height = 259;
+	canvas.image("/static/img/ollivanders.jpg", 70, middleY - height/2, width, height);
+
+	var attr = {font: '24px ' + fontGeorgia, fill: pinkDark, "text-anchor": "start"};
+	var shift = 50;
+	canvas.text(100 + width, middleY - shift, "Let's start with an easy one.").attr(attr);
+	canvas.text(100 + width, middleY + shift, "Harry Potter's wand contains a feather\nbelonging to which type of bird?").attr(attr);
 
 	showAnswerButton(canvasWidth / 2, canvasHeight - 100, "Answer", onSuccess);
 }
