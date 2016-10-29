@@ -45,7 +45,7 @@ function init() {
 	var titleX = canvasWidth / 2;
 	var titleY = canvasHeight / 2 - 50;
 	var animShift = 10;
-	var title = canvas.text(titleX, titleY, "Lulu and Huhu's\nBirthday Treasure Hunt!")
+	var title = canvas.text(titleX, titleY, "Lulu and Huhu's\nBirthday Extravaganza!")
 		.attr({font: 'Bold 58px ' + fontGeorgia, titleGradientAngle: 0, stroke: torquiseDark, "stroke-width": 1});
 	
 	var anim = Raphael.animation({titleGradientAngle: 360}, 2000).repeat("Infinity");

@@ -4,7 +4,7 @@ function promptPassword(onSuccess) {
 		$.ajax({
 		  type: "POST",
 		  url: "/password/",
-		  data: JSON.stringify({"password": password}),
+		  data: JSON.stringify({"password": password, "current_path": window.location.pathname}),
 		  contentType: 'application/json; charset=utf-8',
 		  success: function (data) {
 		  	resp = JSON.parse(data)

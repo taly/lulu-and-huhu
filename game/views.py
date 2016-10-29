@@ -6,6 +6,8 @@ import json
 
 from level_map import levels
 
+FIRST_PASSWORD = "happybirthday"
+
 def index(request):
     return render(request, 'game/intro.html', {})
 
@@ -18,16 +20,26 @@ def level(request, level_code):
 
 def submit_password(request):
 	if request.method == 'POST':
-		print "REQUEST = %s " % request.body
 		payload = json.loads(request.body)
 		password = payload['password']
-		print "Password: %s" % password
 		password = ''.join(x.strip().lower() for x in password.split())
-		for i in range(len(levels)):
-			level = levels[i]
-			for possible_password in level.passwords:
-				print "Possible password: %s" % possible_password
-				if possible_password == password:
-					redirect_url = reverse("level", kwargs={"level_code": level.level_code})
-					return HttpResponse(json.dumps({"redirect": redirect_url}))
+		url = payload['current_path']
+
+		if "level" in url:			
+			level_code = url.strip('/').split('/')[-1]
+			for i in range(len(levels)):
+				level = levels[i]
+				if i < len(levels) - 1:
+					if level.level_code == level_code:
+						for possible_password in level.passwords:
+							if possible_password == password:
+								redirect_url = reverse("level", kwargs={"level_code": levels[i+1].level_code})
+								return HttpResponse(json.dumps({"redirect": redirect_url}))
+				else:
+					pass # TODO
+		elif password == FIRST_PASSWORD:
+			level = levels[0]
+			redirect_url = reverse("level", kwargs={"level_code": level.level_code})
+			return HttpResponse(json.dumps({"redirect": redirect_url}))
+
 		return HttpResponseForbidden()
