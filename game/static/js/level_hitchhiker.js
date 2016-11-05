@@ -7,6 +7,14 @@ function init() {
 	canvas.text(canvasWidth / 2, canvasHeight / 2 + 50, "Word number 12").attr(attr);
 
 	showAnswerButton(canvasWidth / 2, canvasHeight - 100, "Answer", onSuccess);
+	prepareVideo();
+}
+
+function prepareVideo() {
+	var width = 500;
+	var height = 320;
+	var infobox = new Infobox(canvas, {x: canvasWidth/2 - width/2, y: canvasHeight/2 - height/2 - 30, width: width, height:height});
+	infobox.div.html('<iframe width="' + width + '" height="' + height + '" id="video" src="https://www.youtube.com/embed/jTE7StxoP6M" style="display:none;"> </iframe>');
 }
 
 function showSpace() {
@@ -31,7 +39,8 @@ function onSuccess(redirectUrl) {
 	var titleAttr = {font: '30px ' + fontGeorgia, fill: yellow};
 	canvas.text(titleX, 50, "The Final Frontier!").attr(titleAttr);
 
-	// TODO payoff
+	// Final frontier video
+	$("#video").show();
 
 	// Continue button
 	showStandardButton(canvasWidth / 2, canvasHeight - 100, "Continue", function() {
