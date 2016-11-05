@@ -59,7 +59,7 @@
 		// build popup
 		var $popup = $('<iframe class="jquery_prompt" allowtransparency=true frameborder="0" scrolling="auto" marginheight="0" marginwidth="0"></iframe><div class="jquery_prompt plugin"><form>'
 						+'<div class="footer">'
-						+'<input type="text" name="text" value="" style="display:none;"/>'
+						+'<input type="text" name="text" value=""/>'
 						+'<button type="reset" style="display:none;">Cancel</button>'
 						+'<button type="submit" name="submit" value="1">OK</button>'
 						+'<br/><input name="bugme" id="bugme" type="checkbox" value="1" checked="checked" style="display:none;">'
@@ -105,7 +105,8 @@
 					$('button[name=submit]', this).val(0);
 					$(this).submit();
 				})
-				.find('button[type=submit]')
+				// .find('button[type=submit]')
+				.find('input[name=text]')
 				.trigger('focus')
 				.end()
 				.end();
@@ -123,11 +124,11 @@
 	};
 
 	$.fn.alert = function(message,callback,bugme){
-		return $(this).popup(message,callback,bugme);
+		return $(this).popup(message,callback,bugme).find("input[name=text]").hide().end();
 	};
 
 	$.fn.confirm = function(message,callback,bugme){
-		return $(this).popup(message,callback,bugme).find("button").show().end();
+		return $(this).popup(message,callback,bugme).find("button").show().find("input[name=text]").hide().end();
 	};
 	
 })(jQuery);
