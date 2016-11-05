@@ -236,7 +236,7 @@ function onWin() {
 }
 
 function onLose() {
-	alert("You lost :(\nTry again?");
+	alert("You lost :(<br>Try again?");
 	resetGame();
 }
 

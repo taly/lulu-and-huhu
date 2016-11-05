@@ -27,9 +27,6 @@ var pages = [
 	],
 	[
 		"If you're stuck you can always contact Auntie Tafi ;-)",
-		"Tech note: the passwords are based on the browser's dialog prompt,\nso don't check the \"prevent addional dialogs\" box if it appears."
-	],
-	[
 		"Good luck!",
 		"The password for level 1 is:\nhappybirthday"
 	]

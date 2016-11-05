@@ -309,7 +309,7 @@ function onWin() {
 }
 
 function onLose() {
-	alert("Something's not right :(\nKeep trying!");
+	alert("Something's not right :(<br>Keep trying!");
 	resetGame();
 }
 

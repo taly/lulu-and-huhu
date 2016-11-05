@@ -281,10 +281,7 @@ function onWin() {
 }
 
 function onLose() {
-	var conf = confirm("No luck :(\nTry again?");
-	if (conf) {
-		resetGame();
-	}
+	alert("No luck :(<br>Try again?", resetGame);
 }
 
 $(document).ready(function() {
