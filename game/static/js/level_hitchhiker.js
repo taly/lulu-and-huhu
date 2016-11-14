@@ -14,7 +14,7 @@ function prepareVideo() {
 	var width = 500;
 	var height = 320;
 	var infobox = new Infobox(canvas, {x: canvasWidth/2 - width/2, y: canvasHeight/2 - height/2 - 30, width: width, height:height});
-	infobox.div.html('<iframe width="' + width + '" height="' + height + '" id="video" src="https://www.youtube.com/embed/jTE7StxoP6M" style="display:none;"> </iframe>');
+	infobox.div.html('<iframe width="' + width + '" height="' + height + '" id="video" src="https://www.youtube.com/embed/tXfdj8JcEug" style="display:none;"> </iframe>');
 }
 
 function showSpace() {
