@@ -54,6 +54,12 @@ function init() {
 
 	drawTree();
 	drawFamilyMemberBank();
+	prepareCache();
+}
+
+function prepareCache() {
+	(new Image()).src = "/static/img/zoe_showing.png";
+	(new Image()).src = "/static/img/speech1.png";
 }
 
 function getRes(name) {
@@ -300,10 +306,20 @@ function rectIntersect(r1, r2) {
 function onWin() {
 	resetCanvas();
 	var titleAttr = {font: '30px ' + fontGeorgia, fill: torquiseDark};
+	canvas.text(titleX, 50, "Will you look at that!").attr(titleAttr);
 
+	var width = 523;
+	var height = 433;
+	canvas.image("/static/img/zoe_showing.png", canvasWidth/2 - width/2, canvasHeight/2 - height/2, width, height);
+
+	width = 192;
+	height = 192;
+	canvas.image("/static/img/speech1.png", 100, 50, width, height);
+
+	canvas.text(195, 125, "Now... who\nis Dubi's wife???").attr({font: "22px " + fontGeorgia, fill: pinkDark});
 
 	// Continue button
-	showAnswerButton(canvasWidth / 2, canvasHeight - 50, "Next level", function(redirectUrl) {
+	showAnswerButton(canvasWidth / 2, canvasHeight - 50, "Answer", function(redirectUrl) {
 		window.location = redirectUrl;
 	});
 }

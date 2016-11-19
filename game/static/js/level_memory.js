@@ -17,8 +17,6 @@ function init() {
 	prepareVideo();
 	randomizePositions();
 	resetCards();
-
-	onWin();
 }
 
 function prepareVideo() {

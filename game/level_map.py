@@ -15,7 +15,7 @@ levels = [
 	Level("a0279df3b51e", "matti", ["piano"]), # Lamed oval
 	Level("d8a21e8b9bad", "memory", ["kiliv", "kelev"]), # Zoe ezba nu nu nu
 	Level("179ef5e3aef6", "hitchhiker", ["space"]), # Lamed (17) reciting the final frontier
-	Level("821826bfa066", "family_tree", ["temp"]), # Zoe TODO
+	Level("821826bfa066", "family_tree", ["erica", "erika", "erikah"]), # Zoe showing paper
 	Level("ebec8e921cc9", "objects_riddle", ["21", "twentyone"]), # Lamed TODO
 	Level("42860a1fc5f9", "song", ["memory"]), # Zoe TODO
 ]
