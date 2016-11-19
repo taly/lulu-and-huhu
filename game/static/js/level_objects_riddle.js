@@ -65,11 +65,12 @@ function onSuccess(redirectUrl) {
 	resetCanvas();
 
 	var titleAttr = {font: '30px ' + fontGeorgia, fill: torquiseDark};
-	canvas.text(titleX, 50, "Excellent!").attr(titleAttr);
+	canvas.text(titleX, 50, "Woohoo!").attr(titleAttr);
 
-	var imgWidth = 297;
-	var imgHeight = 396;
-	canvas.image("/static/img/lulu_zeidale.png", canvasWidth / 2 - imgWidth / 2, canvasHeight / 2 - imgHeight / 2, imgWidth, imgHeight);
+	var imgWidth = 427;
+	var imgHeight = 363;
+	var img = canvas.image("/static/img/lamed_woohoo.png", canvasWidth / 2 - imgWidth / 2, canvasHeight / 2 - imgHeight / 2, imgWidth, imgHeight);
+	img.animate({transform: "r360"}, 800, "easeOut");
 
 	// Continue button
 	showStandardButton(canvasWidth / 2, canvasHeight - 50, "Continue", function() {

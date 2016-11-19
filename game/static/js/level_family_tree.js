@@ -316,7 +316,7 @@ function onWin() {
 	height = 192;
 	canvas.image("/static/img/speech1.png", 100, 50, width, height);
 
-	canvas.text(195, 125, "Now... who\nis Dubi's wife???").attr({font: "22px " + fontGeorgia, fill: pinkDark});
+	canvas.text(195, 125, "Now... who is\nDubi's wife???").attr({font: "22px " + fontGeorgia, fill: pinkDark});
 
 	// Continue button
 	showAnswerButton(canvasWidth / 2, canvasHeight - 50, "Answer", function(redirectUrl) {
