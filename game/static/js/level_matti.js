@@ -78,9 +78,9 @@ function onSuccess(redirectUrl) {
 	var attr = {font: '36px ' + fontGeorgia, fill: torquiseDark};
 	canvas.text(titleX, 50, "Beautiful!").attr(attr);
 
-	var imgWidth = 381;
-	var imgHeight = 405;
-	var img = canvas.image("/static/img/z3l32.png", canvasWidth / 2 - imgWidth / 2, canvasHeight / 2 - imgHeight / 2, imgWidth, imgHeight);
+	var imgWidth = 272;
+	var imgHeight = 367;
+	var img = canvas.image("/static/img/lamed7.png", canvasWidth / 2 - imgWidth / 2, canvasHeight / 2 - imgHeight / 2, imgWidth, imgHeight);
 	img.transform("s0");
 	img.animate({transform: "s1r1800"}, 1000, "easeOut");
 

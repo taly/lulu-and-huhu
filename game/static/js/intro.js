@@ -5,7 +5,7 @@ var currentIntroPage = -1;
 
 var pages = [
 	[
-		"Zoe is 10. Lammed is 40.",
+		"Zoe is 10. Lammed is nearly 40.",
 		"Wow!!!",
 		"Let's celebrate with some games, riddles,\nnostalgia and other surprises..."
 	],
