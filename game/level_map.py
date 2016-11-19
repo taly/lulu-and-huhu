@@ -17,7 +17,8 @@ levels = [
 	Level("179ef5e3aef6", "hitchhiker", ["space"]), # Lamed (17) reciting the final frontier
 	Level("821826bfa066", "family_tree", ["erica", "erika", "erikah"]), # Zoe showing paper
 	Level("ebec8e921cc9", "objects_riddle", ["21", "twentyone"]), # Lamed woohoo
-	Level("42860a1fc5f9", "song", ["memory"]), # Zoe TODO
+	Level("42860a1fc5f9", "song", ["memory", "memories"]), # Zeidale yeled hamor
+	Level("27e2f82fa5f9", "victory", []) # Victory level
 ]
 
 # UUID pool:
