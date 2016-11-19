@@ -139,7 +139,7 @@ function randomizeMove() {
 
 function getRandomMove() {
 	// TTT with 2 perfect players can get a bit boring without this...
-	var makeError = Math.random() < 0.3;
+	var makeError = Math.random() < 0.4;
 
 	if (!makeError) {
 		// First see if we have a winning move

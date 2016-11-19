@@ -272,7 +272,7 @@ function onCheckTree() {
 			return;
 		}
 	}
-	// TODO onWin
+	onWin();
 }
 
 function debugRects(r1, r2) {

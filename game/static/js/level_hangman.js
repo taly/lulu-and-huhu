@@ -79,23 +79,23 @@ function onGuessLetterClicked() {
 		return;
 	}
 
-	var letter = prompt("Which letter?");
+	prompt("Which letter?", function(letter) {
+		letter = letter.trim();
+		if (letter.length != 1) {
+			alert("1 letter please!");
+			return;
+		}
+		if (!letter.match(/[a-z]/i)) {
+			alert("Must be a letter!");
+			return;
+		}
+		if (guessed.indexOf(letter) != -1) {
+			alert("Already guessed this one!");
+			return;
+		}
 
-	letter = letter.trim();
-	if (letter.length != 1) {
-		alert("1 letter please!");
-		return;
-	}
-	if (!letter.match(/[a-z]/i)) {
-		alert("Must be a letter!");
-		return;
-	}
-	if (guessed.indexOf(letter) != -1) {
-		alert("Already guessed this one!");
-		return;
-	}
-
-	onLetterGuessed(letter.toLowerCase());
+		onLetterGuessed(letter.toLowerCase());
+	});	
 }
 
 function onLetterGuessed(letter) {

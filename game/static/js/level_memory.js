@@ -14,9 +14,9 @@ function init() {
 	canvas.text(titleX, titleY + 50, "Match the pairs!").attr(attr);
 
 	prepareCache();
-	prepareVideo();
 	randomizePositions();
 	resetCards();
+	prepareVideo();
 }
 
 function prepareVideo() {
@@ -140,7 +140,7 @@ function onWin() {
 	var titleAttr = {font: '30px ' + fontGeorgia, fill: torquiseDark};
 	canvas.text(titleX, 70, "You win!").attr(titleAttr);
 
-	// Final frontier video
+	// Little video
 	$("#video").show();
 
 	canvas.text(titleX, canvasHeight - 130, "Next level password:").attr({font: '20px ' + fontGeorgia, fill: pink});
