@@ -27,19 +27,23 @@ def submit_password(request):
 
 		if "level" in url:			
 			level_code = url.strip('/').split('/')[-1]
-			for i in range(len(levels)):
+			for i in range(len(levels) - 1):
 				level = levels[i]
-				if i < len(levels) - 1:
-					if level.level_code == level_code:
-						for possible_password in level.passwords:
-							if possible_password == password:
-								redirect_url = reverse("level", kwargs={"level_code": levels[i+1].level_code})
-								return HttpResponse(json.dumps({"redirect": redirect_url}))
-				else:
-					pass # TODO
+				if level.level_code == level_code:
+					for possible_password in level.passwords:
+						if possible_password == password:
+							redirect_url = reverse("level", kwargs={"level_code": levels[i+1].level_code})
+							return HttpResponse(json.dumps({"redirect": redirect_url}))
 		elif password == FIRST_PASSWORD:
 			level = levels[0]
 			redirect_url = reverse("level", kwargs={"level_code": level.level_code})
 			return HttpResponse(json.dumps({"redirect": redirect_url}))
+		else: # From first page accept any other correct password
+			for i in range(len(levels) - 1):
+				level = levels[i]
+				for possible_password in level.passwords:
+					if possible_password == password:
+						redirect_url = reverse("level", kwargs={"level_code": levels[i+1].level_code})
+						return HttpResponse(json.dumps({"redirect": redirect_url}))
 
 		return HttpResponseForbidden()
