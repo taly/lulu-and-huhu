@@ -16,14 +16,6 @@ function init() {
 	prepareCache();
 	randomizePositions();
 	resetCards();
-	prepareVideo();
-}
-
-function prepareVideo() {
-	var width = 450;
-	var height = 280;
-	var infobox = new Infobox(canvas, {x: canvasWidth/2 - width/2, y: canvasHeight/2 - height/2 - 30, width: width, height:height});
-	infobox.div.html('<iframe width="' + width + '" height="' + height + '" id="video" src="https://www.youtube.com/embed/oYRWa-CLXEo" style="display:none;"> </iframe>');
 }
 
 function resetCards() {
@@ -131,6 +123,7 @@ function prepareCache() {
 		(new Image()).src = "/static/img/" + CARD_SRC[i] + "_1.png";
 		(new Image()).src = "/static/img/" + CARD_SRC[i] + "_2.png";
 	}
+	(new Image()).src = "/static/img/lamed_woohoo.png";
 }
 
 function onWin() {
@@ -140,11 +133,15 @@ function onWin() {
 	var titleAttr = {font: '30px ' + fontGeorgia, fill: torquiseDark};
 	canvas.text(titleX, 70, "You win!").attr(titleAttr);
 
-	// Little video
-	$("#video").show();
+	// Image
+	var imgWidth = 427;
+	var imgHeight = 363;
+	var img = canvas.image("/static/img/lamed_woohoo.png", canvasWidth / 2 - imgWidth / 2, canvasHeight / 2 - imgHeight / 2, imgWidth, imgHeight);
+	img.animate({transform: "r360"}, 800, "easeOut");
 
-	canvas.text(titleX, canvasHeight - 130, "Next level password:").attr({font: '20px ' + fontGeorgia, fill: pink});
-	canvas.text(titleX, canvasHeight - 100, "kiliv").attr({font: '28px ' + fontGeorgia, fill: pinkDark});
+	// Password revel
+	canvas.text(titleX + 140, 230, "Next level\npassword:").attr({font: '20px ' + fontGeorgia, fill: pink});
+	canvas.text(titleX + 140, 280, "kiliv").attr({font: '48px ' + fontGeorgia, fill: pinkDark});
 
 	// Continue button
 	showAnswerButton(canvasWidth / 2, canvasHeight - 50, "Next level", function(redirectUrl) {
