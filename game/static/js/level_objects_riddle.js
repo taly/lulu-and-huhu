@@ -13,7 +13,7 @@ function prepareVideo() {
 	var width = 450;
 	var height = 280;
 	var infobox = new Infobox(canvas, {x: canvasWidth/2 - width/2, y: canvasHeight/2 - height/2 - 30, width: width, height:height});
-	infobox.div.html('<iframe width="' + width + '" height="' + height + '" id="video" src="https://www.youtube.com/embed/oYRWa-CLXEo" style="display:none;"> </iframe>');
+	infobox.div.html('<iframe width="' + width + '" height="' + height + '" id="video" src="https://www.youtube.com/embed/oYRWa-CLXEo" style="display:none;" allowfullscreen> </iframe>');
 }
 
 function showRiddle() {
