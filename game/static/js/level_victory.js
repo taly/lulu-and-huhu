@@ -23,7 +23,7 @@ function prepareVideo() {
 	var width = 600;
 	var height = 373;
 	var infobox = new Infobox(canvas, {x: canvasWidth/2 - width/2, y: canvasHeight/2 - height/2 + 50, width: width, height:height});
-	infobox.div.html('<iframe width="' + width + '" height="' + height + '" id="video" src="https://www.youtube.com/embed/92KI3e5id2g" style="display:none;"> </iframe>');
+	infobox.div.html('<iframe width="' + width + '" height="' + height + '" id="video" src="https://www.youtube.com/embed/sYw1UOfVJ9w" style="display:none;"> </iframe>');
 }
 
 function randomizeBalloonAnimation() {
